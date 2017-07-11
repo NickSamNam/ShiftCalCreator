@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView displayDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
         final TextView displayDateTo = (TextView) findViewById(R.id.mainActivity_tv_dateTo);
+        final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
+        final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
 
         if (savedInstanceState == null) {
             calFrom = Calendar.getInstance();
@@ -36,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
         dateFormat.setTimeZone(calFrom.getTimeZone());
 
         displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
-        displayDateFrom.setOnClickListener(new View.OnClickListener() {
+        displayDateTo.setText(dateFormat.format(calTo.getTime()));
+
+
+        contDateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(MainActivity.this,
@@ -57,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        displayDateTo.setText(dateFormat.format(calTo.getTime()));
-        displayDateTo.setOnClickListener(new View.OnClickListener() {
+        contDateTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(MainActivity.this,
