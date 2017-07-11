@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ShiftCal Creator</string>
+    <string name="blankSchedule">Blank Schedule</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="errorToBeforeFrom">The end date cannot be before the begin date.</string>
 </resources>
