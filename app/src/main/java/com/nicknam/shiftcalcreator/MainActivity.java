@@ -1,10 +1,14 @@
 package com.nicknam.shiftcalcreator;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView displayDateTo = (TextView) findViewById(R.id.mainActivity_tv_dateTo);
         final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
         final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
+        final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
 
         String calTagOnStart = null;
 
@@ -110,6 +115,23 @@ public class MainActivity extends AppCompatActivity {
             else if (calTagOnStart.equals("to"))
                 contDateTo.callOnClick();
         }
+
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.restart)
+                    .setMessage(R.string.restartMessage)
+                    .setIcon(R.drawable.ic_warning)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Intent intent = MainActivity.this.getIntent();
+                            MainActivity.this.finish();
+                            startActivity(intent);
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+            }
+        });
     }
 
     @Override

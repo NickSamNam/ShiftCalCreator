@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary">
 
-    <EditText
-        android:id="@+id/toolbarSchedule_et_name"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
-        android:hint="@string/blankSchedule"
-        android:inputType="textCapWords|textNoSuggestions"
-        android:maxLines="1"
-        android:textColorHighlight="@color/colorAccent"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/toolbarSchedule_et_name"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/blankSchedule"
+            android:inputType="textCapWords|textNoSuggestions"
+            android:maxLines="1"
+            android:textColorHighlight="@color/colorAccent"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/toolbarSchedule_btn_restart"
+            android:layout_marginRight="8dp" />
+
+        <ImageButton
+            android:id="@+id/toolbarSchedule_btn_restart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/restart"
+            android:scaleType="fitCenter"
+            android:tint="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/ic_undo" />
+    </android.support.constraint.ConstraintLayout>
+
+
 </android.support.v7.widget.Toolbar>

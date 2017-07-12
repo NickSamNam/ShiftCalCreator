@@ -14,13 +14,11 @@
         android:id="@+id/activityMain_cont_dateFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
-        android:layout_marginLeft="123dp"
+        android:padding="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivity_tb_scheduleNameToolbar"
-        android:background="?attr/selectableItemBackground">
+        app:layout_constraintTop_toBottomOf="@+id/mainActivity_tb_scheduleNameToolbar">
 
         <TextView
             android:id="@+id/mainActivity_tv_from"
@@ -47,13 +45,11 @@
         android:id="@+id/activityMain_cont_dateTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
-        android:layout_marginRight="35dp"
+        android:padding="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivity_tb_scheduleNameToolbar"
-        android:background="?attr/selectableItemBackground">
+        app:layout_constraintTop_toBottomOf="@+id/mainActivity_tb_scheduleNameToolbar">
 
         <TextView
             android:id="@+id/mainActivity_tv_to"
