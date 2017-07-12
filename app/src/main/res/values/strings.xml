@@ -6,4 +6,7 @@
     <string name="errorToBeforeFrom">The end date cannot be before the begin date.</string>
     <string name="restart">Restart</string>
     <string name="restartMessage">Do you really want to restart?</string>
+    <string name="shifts">Shifts</string>
+    <string name="addToCal">Add To Calendar</string>
+    <string name="addShift">Add Shift</string>
 </resources>
