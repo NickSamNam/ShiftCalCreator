@@ -15,6 +15,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Calendar calFrom, calTo;
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
         final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
 
+        String calTagOnStart = null;
+
         if (savedInstanceState == null) {
             calFrom = Calendar.getInstance();
             calTo = (Calendar) calFrom.clone();
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             calFrom = (Calendar) savedInstanceState.getSerializable("calFrom");
             calTo = (Calendar) savedInstanceState.getSerializable("calTo");
+            calTagOnStart = savedInstanceState.getString("calTag");
         }
 
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
         displayDateTo.setText(dateFormat.format(calTo.getTime()));
 
-        final DatePickerDialog datePickerDialog = new DatePickerDialog(
+        datePickerDialog = new DatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -99,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+        if (calTagOnStart != null && calTagOnStart.equals("from"))
+            contDateFrom.callOnClick();
+        else if (calTagOnStart != null && calTagOnStart.equals("to"))
+            contDateTo.callOnClick();
     }
 
     @Override
@@ -106,5 +115,9 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable("calFrom", calFrom);
         outState.putSerializable("calTo", calTo);
+        if (datePickerDialog != null && datePickerDialog.isShowing()) {
+            outState.putString("calTag", (String) datePickerDialog.getDatePicker().getTag());
+            datePickerDialog.dismiss();
+        }
     }
 }
