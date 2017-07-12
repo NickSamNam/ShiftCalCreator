@@ -34,13 +34,12 @@
             android:id="@+id/mainActivity_tv_dateFrom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
             android:text="11 July 2017"
-            android:textAppearance="@android:style/Material"
+            android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp"
-            android:typeface="normal"
             app:layout_constraintLeft_toLeftOf="@+id/mainActivity_tv_from"
-            app:layout_constraintTop_toBottomOf="@+id/mainActivity_tv_from" />
+            app:layout_constraintTop_toBottomOf="@+id/mainActivity_tv_from"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
@@ -70,13 +69,12 @@
             android:id="@+id/mainActivity_tv_dateTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
             android:text="11 July 2018"
-            android:textAppearance="@android:style/Material"
+            android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp"
-            android:typeface="normal"
             app:layout_constraintRight_toRightOf="@+id/mainActivity_tv_to"
-            app:layout_constraintTop_toBottomOf="@+id/mainActivity_tv_to" />
+            app:layout_constraintTop_toBottomOf="@+id/mainActivity_tv_to"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
