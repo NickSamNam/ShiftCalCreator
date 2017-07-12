@@ -104,10 +104,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (calTagOnStart != null && calTagOnStart.equals("from"))
-            contDateFrom.callOnClick();
-        else if (calTagOnStart != null && calTagOnStart.equals("to"))
-            contDateTo.callOnClick();
+        if (calTagOnStart != null && !datePickerDialog.isShowing()) {
+            if (calTagOnStart.equals("from"))
+                contDateFrom.callOnClick();
+            else if (calTagOnStart.equals("to"))
+                contDateTo.callOnClick();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        datePickerDialog.dismiss();
     }
 
     @Override
@@ -117,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putSerializable("calTo", calTo);
         if (datePickerDialog != null && datePickerDialog.isShowing()) {
             outState.putString("calTag", (String) datePickerDialog.getDatePicker().getTag());
-            datePickerDialog.dismiss();
         }
     }
 }
