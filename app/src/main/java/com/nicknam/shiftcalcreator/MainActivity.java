@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Auto open DatePickerDialog if needed
         if (calTagOnStart != null && !datePickerDialog.isShowing()) {
             if (calTagOnStart.equals("from"))
                 contDateFrom.callOnClick();
@@ -116,20 +117,21 @@ public class MainActivity extends AppCompatActivity {
                 contDateTo.callOnClick();
         }
 
+//        Restart button
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(MainActivity.this)
-                    .setTitle(R.string.restart)
-                    .setMessage(R.string.restartMessage)
-                    .setIcon(R.drawable.ic_warning)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            Intent intent = MainActivity.this.getIntent();
-                            MainActivity.this.finish();
-                            startActivity(intent);
-                        }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                        .setTitle(R.string.restart)
+                        .setMessage(R.string.restartMessage)
+                        .setIcon(R.drawable.ic_warning)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Intent intent = MainActivity.this.getIntent();
+                                MainActivity.this.finish();
+                                startActivity(intent);
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
             }
         });
     }
@@ -148,5 +150,18 @@ public class MainActivity extends AppCompatActivity {
         if (datePickerDialog != null && datePickerDialog.isShowing()) {
             outState.putString("calTag", (String) datePickerDialog.getDatePicker().getTag());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.exit)
+                .setMessage(R.string.exitMessage)
+                .setIcon(R.drawable.ic_warning)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        MainActivity.super.onBackPressed();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
     }
 }
