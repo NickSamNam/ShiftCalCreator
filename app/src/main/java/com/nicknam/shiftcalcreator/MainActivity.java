@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         String calTagOnStart = null;
 
+//        Restore saved instance state or init calendars
         if (savedInstanceState == null) {
             calFrom = Calendar.getInstance();
             calTo = (Calendar) calFrom.clone();
@@ -44,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
             calTagOnStart = savedInstanceState.getString("calTag");
         }
 
+//        Create date format
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         dateFormat.setTimeZone(calFrom.getTimeZone());
 
+//        Display date
         displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
         displayDateTo.setText(dateFormat.format(calTo.getTime()));
 
+//        Create DatePickerDialog
         datePickerDialog = new DatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 0
         );
 
-
+//        Set click action for date from container
         contDateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Set click action for date to container
         contDateTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
