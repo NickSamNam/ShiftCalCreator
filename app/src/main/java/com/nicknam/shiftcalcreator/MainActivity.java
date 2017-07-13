@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,12 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private DatePickerDialogFragment dpdf;
+    private ArrayList<Shift> shifts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
             dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).setTime((Date) savedInstanceState.getSerializable("from"));
             dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).setTime((Date) savedInstanceState.getSerializable("to"));
+
+            shifts = (ArrayList<Shift>) savedInstanceState.getSerializable("shifts");
         } else {
             dpdf = new DatePickerDialogFragment();
+            shifts = new ArrayList<>();
         }
 
 //        Set listeners
@@ -116,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
+
+//        Setup List of shifts
+        rvShifts.setLayoutManager(new LinearLayoutManager(this));
+        rvShifts.setAdapter(new ShiftAdapter(shifts));
     }
 
     @Override
@@ -123,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable("from", dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime());
         outState.putSerializable("to", dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime());
+        outState.putSerializable("shifts", shifts);
     }
 
     @Override
