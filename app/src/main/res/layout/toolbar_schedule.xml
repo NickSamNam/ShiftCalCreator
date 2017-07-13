@@ -9,10 +9,14 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/toolbarSchedule_et_name"
             android:layout_width="0dp"
             android:layout_height="56dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
             android:background="@android:color/transparent"
             android:hint="@string/blankSchedule"
             android:inputType="textCapWords|textNoSuggestions"
@@ -20,12 +24,10 @@
             android:textColorHighlight="@color/colorAccent"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/toolbarSchedule_btn_restart"
-            android:layout_marginRight="8dp" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlHardcoded" />
 
         <ImageButton
             android:id="@+id/toolbarSchedule_btn_restart"
@@ -42,7 +44,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/ic_undo" />
+            app:srcCompat="@drawable/ic_undo"
+            tools:ignore="RtlHardcoded" />
     </android.support.constraint.ConstraintLayout>
 
 
