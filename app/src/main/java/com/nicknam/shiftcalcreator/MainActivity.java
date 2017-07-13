@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
         final RecyclerView rvShifts = (RecyclerView) findViewById(R.id.activityMain_rv_shifts);
+        final Button btnAddShift = (Button) findViewById(R.id.activityMain_btn_addShift);
 
 //        Create date format
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
@@ -125,7 +127,23 @@ public class MainActivity extends AppCompatActivity {
 
 //        Setup List of shifts
         rvShifts.setLayoutManager(new LinearLayoutManager(this));
-        rvShifts.setAdapter(new ShiftAdapter(shifts));
+        final ShiftAdapter shiftAdapter = new ShiftAdapter(shifts);
+        rvShifts.setAdapter(shiftAdapter);
+
+//        AddShift button
+        btnAddShift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 14-7-2017 Replace dummy shifts
+                Calendar calStart = Calendar.getInstance();
+                calStart.set(2017, 6, 14, 6, 0);
+                Calendar calEnd = (Calendar) calStart.clone();
+                calEnd.set(2017, 6, 14, 16, 0);
+                shifts.add(new Shift("Day", 2, calStart, calEnd));
+
+                shiftAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
