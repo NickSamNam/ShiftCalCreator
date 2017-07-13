@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -24,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView displayDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
-        final TextView displayDateTo = (TextView) findViewById(R.id.mainActivity_tv_dateTo);
+        final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
+        final TextView tvDateTo = (TextView) findViewById(R.id.mainActivity_tv_dateTo);
         final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
         final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
+        final RecyclerView rvShifts = (RecyclerView) findViewById(R.id.activityMain_rv_shifts);
 
 //        Create date format
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
@@ -53,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDateSet() {
                 Calendar from = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
                 Calendar to = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO);
-                displayDateFrom.setText(dateFormat.format(from.getTime()));
+                tvDateFrom.setText(dateFormat.format(from.getTime()));
                 if (from.after(to)) {
                     to.setTime(from.getTime());
                     to.add(Calendar.YEAR, 1);
-                    displayDateTo.setText(dateFormat.format(to.getTime()));
+                    tvDateTo.setText(dateFormat.format(to.getTime()));
                 }
             }
         });
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     to.setTime(from.getTime());
                     Toast.makeText(MainActivity.this, R.string.errorToBeforeFrom, Toast.LENGTH_LONG).show();
                 }
-                displayDateTo.setText(dateFormat.format(to.getTime()));
+                tvDateTo.setText(dateFormat.format(to.getTime()));
             }
         });
 
@@ -94,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        Display date
-        displayDateFrom.setText(dateFormat.format(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime()));
-        displayDateTo.setText(dateFormat.format(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime()));
+        tvDateFrom.setText(dateFormat.format(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime()));
+        tvDateTo.setText(dateFormat.format(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime()));
 
 //        Restart button
         btnRestart.setOnClickListener(new View.OnClickListener() {
