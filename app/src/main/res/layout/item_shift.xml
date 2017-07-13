@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
     android:background="@color/colorPrimary">
 
     <TextView
@@ -17,7 +20,7 @@
         android:text="Day"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +35,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="2x"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -48,12 +52,13 @@
         android:layout_marginTop="8dp"
         android:text="08:00"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/itemShift_tv_name"
         app:layout_constraintRight_toLeftOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.5"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -63,16 +68,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="7dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="16:00"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView6"
         app:layout_constraintRight_toLeftOf="@+id/itemShift_tv_repetition"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.5"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <TextView
@@ -84,6 +90,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="-"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
