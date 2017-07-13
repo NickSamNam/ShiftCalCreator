@@ -1,13 +1,11 @@
 package com.nicknam.shiftcalcreator;
 
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,10 +13,11 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private DatePickerDialogFragment datePickerDialogFragment;
+    private DatePickerDialogFragment dpdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,29 +35,32 @@ public class MainActivity extends AppCompatActivity {
         dateFormat.setTimeZone(Calendar.getInstance().getTimeZone());
 
 //        Create DatePickerDialog
-        datePickerDialogFragment = new DatePickerDialogFragment();
+        dpdf = new DatePickerDialogFragment();
 
-        datePickerDialogFragment.setCalFromSetListener(new DatePickerDialogFragment.OnDateSetListener() {
+        dpdf.setCalFromSetListener(new DatePickerDialogFragment.OnDateSetListener() {
             @Override
-            public void onDateSet(Calendar calFrom, Calendar calTo) {
-                displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
-                if (calFrom.after(calTo)) {
-                    calTo = (Calendar) calFrom.clone();
-                    calTo.add(Calendar.YEAR, 1);
-                    displayDateTo.setText(dateFormat.format(calTo.getTime()));
+            public void onDateSet() {
+                Calendar from = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
+                Calendar to = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO);
+                displayDateFrom.setText(dateFormat.format(from.getTime()));
+                if (from.after(to)) {
+                    to.setTime(from.getTime());
+                    to.add(Calendar.YEAR, 1);
+                    displayDateTo.setText(dateFormat.format(to.getTime()));
                 }
             }
         });
 
-        datePickerDialogFragment.setCalToSetListener(new DatePickerDialogFragment.OnDateSetListener() {
+        dpdf.setCalToSetListener(new DatePickerDialogFragment.OnDateSetListener() {
             @Override
-            public void onDateSet(Calendar calFrom, Calendar calTo) {
-                if (calTo.after(calFrom)) {
-                    displayDateTo.setText(dateFormat.format(calTo.getTime()));
-                } else {
-                    calTo.set(calFrom.get(Calendar.YEAR), calFrom.get(Calendar.MONTH), calFrom.get(Calendar.DAY_OF_MONTH));
+            public void onDateSet() {
+                Calendar from = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
+                Calendar to = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO);
+                if (to.before(from)) {
+                    to.setTime(from.getTime());
                     Toast.makeText(MainActivity.this, R.string.errorToBeforeFrom, Toast.LENGTH_LONG).show();
                 }
+                displayDateTo.setText(dateFormat.format(to.getTime()));
             }
         });
 
@@ -66,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         contDateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialogFragment.setCalendar(DatePickerDialogFragment.CALENDAR_FROM);
-                datePickerDialogFragment.show(getFragmentManager(), "calFrom");
+                dpdf.setCalendar(DatePickerDialogFragment.CALENDAR_FROM);
+                dpdf.show(getFragmentManager(), "calFrom");
             }
         });
 
@@ -75,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
         contDateTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialogFragment.setCalendar(DatePickerDialogFragment.CALENDAR_TO);
-                datePickerDialogFragment.show(getFragmentManager(), "calTo");
+                dpdf.setCalendar(DatePickerDialogFragment.CALENDAR_TO);
+                dpdf.show(getFragmentManager(), "calTo");
             }
         });
 
 //        Display date
-        displayDateFrom.setText(dateFormat.format(datePickerDialogFragment.getDate(DatePickerDialogFragment.CALENDAR_FROM)));
-        displayDateTo.setText(dateFormat.format(datePickerDialogFragment.getDate(DatePickerDialogFragment.CALENDAR_TO)));
+        displayDateFrom.setText(dateFormat.format(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime()));
+        displayDateTo.setText(dateFormat.format(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime()));
 
 //        Restart button
         btnRestart.setOnClickListener(new View.OnClickListener() {

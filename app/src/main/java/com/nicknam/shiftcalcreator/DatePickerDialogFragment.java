@@ -59,20 +59,11 @@ public class DatePickerDialogFragment extends DialogFragment implements DatePick
             throw new IllegalArgumentException("Invalid calendar");
     }
 
-    public Date getDate(int calendar) {
+    public Calendar getCalendar(int calendar) {
         if (calendar == CALENDAR_FROM)
-            return calFrom.getTime();
+            return calFrom;
         else if (calendar == CALENDAR_TO)
-            return calTo.getTime();
-        else
-            throw new IllegalArgumentException("Invalid calendar");
-    }
-
-    public void setDate(int calendar, int year, int month, int dayOfMonth) {
-        if (calendar == CALENDAR_FROM)
-            calFrom.set(year, month, dayOfMonth);
-        else if (calendar == CALENDAR_TO)
-            calTo.set(year, month, dayOfMonth);
+            return calTo;
         else
             throw new IllegalArgumentException("Invalid calendar");
     }
@@ -81,14 +72,14 @@ public class DatePickerDialogFragment extends DialogFragment implements DatePick
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         if (dpdTag == CALENDAR_FROM) {
             calFrom.set(year, month, dayOfMonth);
-            calFromSetListener.onDateSet(calFrom, calTo);
+            calFromSetListener.onDateSet();
         } else if (dpdTag ==CALENDAR_TO) {
             calTo.set(year, month, dayOfMonth);
-            calToSetListener.onDateSet(calFrom, calTo);
+            calToSetListener.onDateSet();
         }
     }
 
     public interface OnDateSetListener {
-        void onDateSet(Calendar calFrom, Calendar calTo);
+        void onDateSet();
     }
 }
