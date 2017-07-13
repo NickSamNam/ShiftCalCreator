@@ -34,9 +34,20 @@ public class MainActivity extends AppCompatActivity {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         dateFormat.setTimeZone(Calendar.getInstance().getTimeZone());
 
-//        Create DatePickerDialog
-        dpdf = new DatePickerDialogFragment();
+//        Recover saved instance state
+        if (savedInstanceState != null) {
+            dpdf = (DatePickerDialogFragment) getFragmentManager().findFragmentByTag("datePicker");
 
+            if (dpdf == null)
+                dpdf = new DatePickerDialogFragment();
+
+            dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).setTime((Date) savedInstanceState.getSerializable("from"));
+            dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).setTime((Date) savedInstanceState.getSerializable("to"));
+        } else {
+            dpdf = new DatePickerDialogFragment();
+        }
+
+//        Set listeners
         dpdf.setCalFromSetListener(new DatePickerDialogFragment.OnDateSetListener() {
             @Override
             public void onDateSet() {
@@ -68,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
         contDateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dpdf.setCalendar(DatePickerDialogFragment.CALENDAR_FROM);
-                dpdf.show(getFragmentManager(), "calFrom");
+                dpdf.setSelected(DatePickerDialogFragment.CALENDAR_FROM);
+                dpdf.show(getFragmentManager(), "datePicker");
             }
         });
 
@@ -77,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         contDateTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dpdf.setCalendar(DatePickerDialogFragment.CALENDAR_TO);
-                dpdf.show(getFragmentManager(), "calTo");
+                dpdf.setSelected(DatePickerDialogFragment.CALENDAR_TO);
+                dpdf.show(getFragmentManager(), "datePicker");
             }
         });
 
@@ -103,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("from", dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime());
+        outState.putSerializable("to", dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime());
     }
 
     @Override

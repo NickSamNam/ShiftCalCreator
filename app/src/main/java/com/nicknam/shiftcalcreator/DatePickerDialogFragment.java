@@ -43,7 +43,7 @@ public class DatePickerDialogFragment extends DialogFragment implements DatePick
         this.calToSetListener = calToSetListener;
     }
 
-    public void setCalendar(int calendar) {
+    public void setSelected(int calendar) {
 
         if (calendar == CALENDAR_FROM) {
             dpdYear = calFrom.get(Calendar.YEAR);
