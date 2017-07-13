@@ -18,8 +18,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private Calendar calFrom, calTo;
-    private DatePickerDialog datePickerDialog;
+    private DatePickerDialogFragment datePickerDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,95 +31,58 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
 
-        String calTagOnStart = null;
-
-//        Restore saved instance state or init calendars
-        if (savedInstanceState == null) {
-            calFrom = Calendar.getInstance();
-            calTo = (Calendar) calFrom.clone();
-            calTo.add(Calendar.YEAR, 1);
-        } else {
-            calFrom = (Calendar) savedInstanceState.getSerializable("calFrom");
-            calTo = (Calendar) savedInstanceState.getSerializable("calTo");
-            calTagOnStart = savedInstanceState.getString("calTag");
-        }
-
 //        Create date format
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
-        dateFormat.setTimeZone(calFrom.getTimeZone());
-
-//        Display date
-        displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
-        displayDateTo.setText(dateFormat.format(calTo.getTime()));
+        dateFormat.setTimeZone(Calendar.getInstance().getTimeZone());
 
 //        Create DatePickerDialog
-        datePickerDialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        if (view.getTag().equals("from")) {
-                            calFrom.set(year, month, dayOfMonth);
-                            displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
-                            if (calFrom.after(calTo)) {
-                                calTo = (Calendar) calFrom.clone();
-                                calTo.add(Calendar.YEAR, 1);
-                                displayDateTo.setText(dateFormat.format(calTo.getTime()));
-                            }
-                        } else if (view.getTag().equals("to")) {
-                            Calendar calTemp = Calendar.getInstance();
-                            calTemp.set(year, month, dayOfMonth);
+        datePickerDialogFragment = new DatePickerDialogFragment();
 
-                            if (calTemp.after(calFrom)) {
-                                calTo.set(year, month, dayOfMonth);
-                                displayDateTo.setText(dateFormat.format(calTo.getTime()));
-                            } else
-                                Toast.makeText(MainActivity.this, R.string.errorToBeforeFrom, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                0,
-                0,
-                0
-        );
+        datePickerDialogFragment.setCalFromSetListener(new DatePickerDialogFragment.OnDateSetListener() {
+            @Override
+            public void onDateSet(Calendar calFrom, Calendar calTo) {
+                displayDateFrom.setText(dateFormat.format(calFrom.getTime()));
+                if (calFrom.after(calTo)) {
+                    calTo = (Calendar) calFrom.clone();
+                    calTo.add(Calendar.YEAR, 1);
+                    displayDateTo.setText(dateFormat.format(calTo.getTime()));
+                }
+            }
+        });
 
-//        Set click action for date from container
+        datePickerDialogFragment.setCalToSetListener(new DatePickerDialogFragment.OnDateSetListener() {
+            @Override
+            public void onDateSet(Calendar calFrom, Calendar calTo) {
+                if (calTo.after(calFrom)) {
+                    displayDateTo.setText(dateFormat.format(calTo.getTime()));
+                } else {
+                    calTo.set(calFrom.get(Calendar.YEAR), calFrom.get(Calendar.MONTH), calFrom.get(Calendar.DAY_OF_MONTH));
+                    Toast.makeText(MainActivity.this, R.string.errorToBeforeFrom, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+//        Set click action for dateFrom container
         contDateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialog.getDatePicker().setTag("from");
-                datePickerDialog.getDatePicker().init(
-                        calFrom.get(Calendar.YEAR),
-                        calFrom.get(Calendar.MONTH),
-                        calFrom.get(Calendar.DAY_OF_MONTH),
-                        null
-                );
-                datePickerDialog.show();
+                datePickerDialogFragment.setCalendar(DatePickerDialogFragment.CALENDAR_FROM);
+                datePickerDialogFragment.show(getFragmentManager(), "calFrom");
             }
         });
 
-//        Set click action for date to container
+//        Set click action for dateTo container
         contDateTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialog.getDatePicker().setTag("to");
-                datePickerDialog.getDatePicker().init(
-                        calTo.get(Calendar.YEAR),
-                        calTo.get(Calendar.MONTH),
-                        calTo.get(Calendar.DAY_OF_MONTH),
-                        null
-                );
-                datePickerDialog.show();
+                datePickerDialogFragment.setCalendar(DatePickerDialogFragment.CALENDAR_TO);
+                datePickerDialogFragment.show(getFragmentManager(), "calTo");
             }
         });
 
-//        Auto open DatePickerDialog if needed
-        if (calTagOnStart != null && !datePickerDialog.isShowing()) {
-            if (calTagOnStart.equals("from"))
-                contDateFrom.callOnClick();
-            else if (calTagOnStart.equals("to"))
-                contDateTo.callOnClick();
-        }
+//        Display date
+        displayDateFrom.setText(dateFormat.format(datePickerDialogFragment.getDate(DatePickerDialogFragment.CALENDAR_FROM)));
+        displayDateTo.setText(dateFormat.format(datePickerDialogFragment.getDate(DatePickerDialogFragment.CALENDAR_TO)));
 
 //        Restart button
         btnRestart.setOnClickListener(new View.OnClickListener() {
@@ -144,17 +106,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        datePickerDialog.dismiss();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("calFrom", calFrom);
-        outState.putSerializable("calTo", calTo);
-        if (datePickerDialog != null && datePickerDialog.isShowing()) {
-            outState.putString("calTag", (String) datePickerDialog.getDatePicker().getTag());
-        }
     }
 
     @Override
