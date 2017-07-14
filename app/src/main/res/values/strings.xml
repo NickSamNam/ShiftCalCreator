@@ -17,4 +17,5 @@
     <string name="repUp">Repetition up</string>
     <string name="repDown">Repetition down</string>
     <string name="add">Add</string>
+    <string name="errorNoShiftName">Please enter a shift name.</string>
 </resources>

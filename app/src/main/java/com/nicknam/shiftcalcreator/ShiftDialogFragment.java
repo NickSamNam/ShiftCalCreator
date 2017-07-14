@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -122,11 +123,13 @@ public class ShiftDialogFragment extends DialogFragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 15-7-2017 Handle incomplete shift
                 shift.setName(etName.getText().toString());
-                if (onShiftCreatedListener != null)
-                    onShiftCreatedListener.onShiftCreated(shift);
-                dismiss();
+                if (shift.getName() != null && !shift.getName().equals("")) {
+                    if (onShiftCreatedListener != null)
+                        onShiftCreatedListener.onShiftCreated(shift);
+                    dismiss();
+                } else
+                    Toast.makeText(getActivity(), R.string.errorNoShiftName, Toast.LENGTH_LONG).show();
             }
         });
 
