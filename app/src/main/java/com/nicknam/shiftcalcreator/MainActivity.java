@@ -147,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 calEnd.set(2017, 6, 14, 16, 0);
                 shifts.add(new Shift("Day", 2, calStart, calEnd));
 
+                ShiftDialogFragment shiftDialogFragment = new ShiftDialogFragment();
+                shiftDialogFragment.setCancelable(false);
+                shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
                 shiftAdapter.notifyDataSetChanged();
             }
         });
