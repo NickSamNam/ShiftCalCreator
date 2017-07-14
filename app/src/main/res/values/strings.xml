@@ -11,4 +11,10 @@
     <string name="addShift">Add Shift</string>
     <string name="exit">Exit</string>
     <string name="exitMessage">Do your really want to exit?</string>
+    <string name="blankShift">Blank Shift</string>
+    <string name="dayOff">Day Off</string>
+    <string name="repetition">Repetition</string>
+    <string name="repUp">Repetition up</string>
+    <string name="repDown">Repetition down</string>
+    <string name="add">Add</string>
 </resources>

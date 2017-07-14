@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:background="@color/colorBackgroundDialog">
+
+    <EditText
+        android:id="@+id/fragmentShiftDialog_et_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="@string/blankShift"
+        android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/fragmentShiftDialog_chkB_dayOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/dayOff"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_et_name"
+        tools:ignore="RtlHardcoded" />
+
+    <LinearLayout
+        android:id="@+id/fragmentShiftDialog_cont_timeTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_btn_repDown"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            android:id="@+id/fragmentShiftDialog_tv_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/to"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/fragmentShiftDialog_tv_timeTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="16:00"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragmentShiftDialog_cont_timeFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="0dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentShiftDialog_cont_timeTo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragmentShiftDialog_cont_timeTo"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            android:id="@+id/fragmentShiftDialog_tv_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/from"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/fragmentShiftDialog_tv_timeFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="06:00"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="@string/repetition"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentShiftDialog_tv_nRep"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragmentShiftDialog_tv_nRep"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/fragmentShiftDialog_tv_nRep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:text="2x"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/fragmentShiftDialog_btn_repUp"
+        app:layout_constraintRight_toRightOf="@+id/fragmentShiftDialog_btn_repUp"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_btn_repUp"
+        tools:ignore="HardcodedText" />
+
+    <ImageButton
+        android:id="@+id/fragmentShiftDialog_btn_repUp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/repUp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_chkB_dayOff"
+        app:srcCompat="@drawable/ic_arrow_drop_up"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageButton
+        android:id="@+id/fragmentShiftDialog_btn_repDown"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/repDown"
+        app:layout_constraintLeft_toLeftOf="@+id/fragmentShiftDialog_tv_nRep"
+        app:layout_constraintRight_toRightOf="@+id/fragmentShiftDialog_tv_nRep"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_tv_nRep"
+        app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+    <Button
+        android:id="@+id/fragmentShiftDialog_btn_cancel"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="RtlHardcoded" />
+
+    <Button
+        android:id="@+id/fragmentShiftDialog_btn_add"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:text="@string/add"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="RtlHardcoded" />
+
+</android.support.constraint.ConstraintLayout>
