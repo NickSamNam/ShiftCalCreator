@@ -22,7 +22,8 @@ import java.util.Calendar;
  */
 
 public class ShiftDialogFragment extends DialogFragment {
-    Shift shift;
+    private Shift shift;
+    private OnShiftCreatedListener onShiftCreatedListener;
 
     @Nullable
     @Override
@@ -91,7 +92,10 @@ public class ShiftDialogFragment extends DialogFragment {
         btnRepUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// TODO: 15-7-2017 Handle click
+                if (shift.getRepetition() == 1)
+                    btnRepDown.setVisibility(View.VISIBLE);
+                shift.setRepetition(shift.getRepetition()+1);
+                tvNRep.setText(shift.getRepetition() + "x");
             }
         });
 
@@ -99,7 +103,10 @@ public class ShiftDialogFragment extends DialogFragment {
         btnRepDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// TODO: 15-7-2017 Handle click
+                shift.setRepetition(shift.getRepetition()-1);
+                if (shift.getRepetition() <= 1)
+                    btnRepDown.setVisibility(View.INVISIBLE);
+                tvNRep.setText(shift.getRepetition() + "x");
             }
         });
 
@@ -115,8 +122,10 @@ public class ShiftDialogFragment extends DialogFragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: 15-7-2017 Handle incomplete shift
                 shift.setName(etName.getText().toString());
-                // TODO: 15-7-2017 Hand shift object over to callback
+                if (onShiftCreatedListener != null)
+                    onShiftCreatedListener.onShiftCreated(shift);
                 dismiss();
             }
         });
@@ -127,6 +136,8 @@ public class ShiftDialogFragment extends DialogFragment {
         tvNRep.setText(shift.getRepetition() + "x");
         tvTimeFrom.setText(timeFormat.format(shift.getTimeStart().getTime()));
         tvTimeTo.setText(timeFormat.format(shift.getTimeEnd().getTime()));
+        if (shift.getRepetition() <= 1)
+            btnRepDown.setVisibility(View.INVISIBLE);
 
         return v;
     }
@@ -135,5 +146,13 @@ public class ShiftDialogFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("shift", shift);
+    }
+
+    public void setOnShiftCreatedListener(OnShiftCreatedListener onShiftCreatedListener) {
+        this.onShiftCreatedListener = onShiftCreatedListener;
+    }
+
+    public interface OnShiftCreatedListener {
+        void onShiftCreated(Shift shift);
     }
 }

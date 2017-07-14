@@ -140,17 +140,16 @@ public class MainActivity extends AppCompatActivity {
         btnAddShift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 14-7-2017 Replace dummy shifts
-                Calendar calStart = Calendar.getInstance();
-                calStart.set(2017, 6, 14, 6, 0);
-                Calendar calEnd = (Calendar) calStart.clone();
-                calEnd.set(2017, 6, 14, 16, 0);
-                shifts.add(new Shift("Day", 2, calStart, calEnd));
-
                 ShiftDialogFragment shiftDialogFragment = new ShiftDialogFragment();
                 shiftDialogFragment.setCancelable(false);
+                shiftDialogFragment.setOnShiftCreatedListener(new ShiftDialogFragment.OnShiftCreatedListener() {
+                    @Override
+                    public void onShiftCreated(Shift shift) {
+                        shifts.add(shift);
+                        shiftAdapter.notifyDataSetChanged();
+                    }
+                });
                 shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
-                shiftAdapter.notifyDataSetChanged();
             }
         });
 
