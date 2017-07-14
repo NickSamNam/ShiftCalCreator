@@ -10,12 +10,13 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 /**
  * Created by snick on 13-7-2017.
  */
 
-public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder> {
+public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder> implements ItemTouchHelperAdapter {
     private ArrayList<Shift> shifts;
     private DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
@@ -42,6 +43,24 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
     @Override
     public int getItemCount() {
         return shifts.size();
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition)
+            for (int i = fromPosition; i < toPosition; i++)
+                Collections.swap(shifts, i, i+1);
+        else
+            for (int i = fromPosition; i > toPosition; i--)
+                Collections.swap(shifts, i, i-1);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        shifts.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class ShiftHolder extends RecyclerView.ViewHolder {

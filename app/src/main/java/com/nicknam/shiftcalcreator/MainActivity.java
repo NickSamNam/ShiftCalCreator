@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         rvShifts.setLayoutManager(new LinearLayoutManager(this));
         final ShiftAdapter shiftAdapter = new ShiftAdapter(shifts);
         rvShifts.setAdapter(shiftAdapter);
+        new ItemTouchHelper(new ItemTouchHelperCallback(shiftAdapter)).attachToRecyclerView(rvShifts);
 
 //        AddShift button
         btnAddShift.setOnClickListener(new View.OnClickListener() {
