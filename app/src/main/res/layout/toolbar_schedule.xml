@@ -27,7 +27,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/toolbarSchedule_btn_restart"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:imeOptions="actionDone"/>
 
         <ImageButton
             android:id="@+id/toolbarSchedule_btn_restart"
