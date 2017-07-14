@@ -104,15 +104,17 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/fragmentShiftDialog_repetitionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:text="@string/repetition"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fragmentShiftDialog_tv_nRep"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragmentShiftDialog_tv_nRep"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"
+        app:layout_constraintVertical_bias="0.333" />
 
     <TextView
         android:id="@+id/fragmentShiftDialog_tv_nRep"

@@ -11,12 +11,24 @@ public class Shift implements Serializable {
     private String name;
     private int repetition;
     private Calendar timeStart, timeEnd;
+    private boolean dayOff;
+
+    public Shift() {
+        name = "";
+        repetition = 1;
+        timeStart = Calendar.getInstance();
+        timeStart.set(0, 0, 0, 9, 0, 0);
+        timeEnd = Calendar.getInstance();
+        timeEnd.set(0, 0, 0, 17, 0, 0);
+        dayOff = false;
+    }
 
     public Shift(String name, int repetition, Calendar timeStart, Calendar timeEnd) {
         this.name = name;
         this.repetition = repetition;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
+        dayOff = false;
     }
 
     public String getName() {
@@ -27,11 +39,35 @@ public class Shift implements Serializable {
         return repetition;
     }
 
+    public boolean isDayOff() {
+        return dayOff;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRepetition(int repetition) {
+        this.repetition = repetition;
+    }
+
+    public void setDayOff(boolean dayOff) {
+        this.dayOff = dayOff;
+    }
+
     public Calendar getTimeStart() {
         return timeStart;
     }
 
+    public void setTimeStart(Calendar timeStart) {
+        this.timeStart = timeStart;
+    }
+
     public Calendar getTimeEnd() {
         return timeEnd;
+    }
+
+    public void setTimeEnd(Calendar timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }

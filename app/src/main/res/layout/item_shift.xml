@@ -54,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/itemShift_tv_name"
-        app:layout_constraintRight_toLeftOf="@+id/textView6"
+        app:layout_constraintRight_toLeftOf="@+id/itemShift_tv_centre"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
@@ -72,13 +72,13 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/textView6"
+        app:layout_constraintLeft_toRightOf="@+id/itemShift_tv_centre"
         app:layout_constraintRight_toLeftOf="@+id/itemShift_tv_repetition"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/itemShift_tv_centre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
