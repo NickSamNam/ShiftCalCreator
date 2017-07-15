@@ -23,4 +23,5 @@
     <string name="errorNoCalName">Please enter a calendar name.</string>
     <string name="errorMoreShifts">A minumum of 2 shifts is required.</string>
     <string name="calSaved">Calendar saved!</string>
+    <string name="calName">Calendar Name</string>
 </resources>
