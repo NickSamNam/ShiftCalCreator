@@ -25,6 +25,7 @@ import java.util.Calendar;
 public class ShiftDialogFragment extends DialogFragment {
     private Shift shift;
     private OnShiftCreatedListener onShiftCreatedListener;
+    private TimePickerDialogFragment tpdf;
 
     @Nullable
     @Override
@@ -48,9 +49,36 @@ public class ShiftDialogFragment extends DialogFragment {
 //        Restore saved instance state
         if (savedInstanceState != null) {
             shift = (Shift) savedInstanceState.getSerializable("shift");
+            tpdf = (TimePickerDialogFragment) getFragmentManager().findFragmentByTag("timePicker");
+
+            if (tpdf == null)
+                tpdf = new TimePickerDialogFragment();
+
+            tpdf.getTime(TimePickerDialogFragment.TIME_FROM).setTime(shift.getTimeStart().getTime());
+            tpdf.getTime(TimePickerDialogFragment.TIME_TO).setTime(shift.getTimeEnd().getTime());
         } else {
             shift = new Shift();
+            tpdf = new TimePickerDialogFragment();
         }
+
+//        Set time listeners
+        tpdf.setTimeFromSetListener(new TimePickerDialogFragment.OnTimeSetListener() {
+            @Override
+            public void onTimeSet() {
+                Calendar from = tpdf.getTime(TimePickerDialogFragment.TIME_FROM);
+                shift.setTimeStart(from);
+                tvTimeFrom.setText(timeFormat.format(from.getTime()));
+            }
+        });
+
+        tpdf.setTimeToSetListener(new TimePickerDialogFragment.OnTimeSetListener() {
+            @Override
+            public void onTimeSet() {
+                Calendar to = tpdf.getTime(TimePickerDialogFragment.TIME_TO);
+                shift.setTimeEnd(to);
+                tvTimeTo.setText(timeFormat.format(to.getTime()));
+            }
+        });
 
 //        Day off check listener
         chkDayOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -77,7 +105,8 @@ public class ShiftDialogFragment extends DialogFragment {
         contTimeFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// TODO: 15-7-2017 Handle click
+                tpdf.setSelected(TimePickerDialogFragment.TIME_FROM);
+                tpdf.show(getFragmentManager(), "timePicker");
             }
         });
 
@@ -85,7 +114,8 @@ public class ShiftDialogFragment extends DialogFragment {
         contTimeTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// TODO: 15-7-2017 Handle click
+                tpdf.setSelected(TimePickerDialogFragment.TIME_TO);
+                tpdf.show(getFragmentManager(), "timePicker");
             }
         });
 
