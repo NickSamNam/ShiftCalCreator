@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_margin="4dp"
-    android:background="@android:color/background_light">
+    android:background="@android:color/background_light"
+    android:elevation="1dp"
+    tools:ignore="UnusedAttribute">
 
     <TextView
         android:id="@+id/itemShift_tv_name"
