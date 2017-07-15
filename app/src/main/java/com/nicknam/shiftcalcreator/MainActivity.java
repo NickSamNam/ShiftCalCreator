@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final EditText etName = (EditText) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
         final TextView tvDateTo = (TextView) findViewById(R.id.mainActivity_tv_dateTo);
         final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
         final RecyclerView rvShifts = (RecyclerView) findViewById(R.id.activityMain_rv_shifts);
         final Button btnAddShift = (Button) findViewById(R.id.activityMain_btn_addShift);
+        final Button btnAddToCal = (Button) findViewById(R.id.activityMain_btn_addToCal);
 
 //        Create date format
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
@@ -183,6 +185,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 return false;
+            }
+        });
+
+//        Add to calendar button
+        btnAddToCal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (etName.getText().toString().equals(""))
+                    Toast.makeText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG).show();
+                else if (shifts.size() < 2)
+                    Toast.makeText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG).show();
             }
         });
     }
