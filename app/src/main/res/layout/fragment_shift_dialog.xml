@@ -23,7 +23,7 @@
         android:imeOptions="actionDone"
         android:inputType="textCapWords"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -37,6 +37,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/dayOff"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_et_name"
         tools:ignore="RtlHardcoded" />
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="16:00"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
+            android:textSize="20sp"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
@@ -101,7 +102,7 @@
             android:layout_height="wrap_content"
             android:text="06:00"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
+            android:textSize="20sp"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -128,7 +129,7 @@
         android:layout_marginTop="0dp"
         android:text="2x"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="@+id/fragmentShiftDialog_btn_repUp"
         app:layout_constraintRight_toRightOf="@+id/fragmentShiftDialog_btn_repUp"
         app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_btn_repUp"
@@ -136,12 +137,13 @@
 
     <ImageButton
         android:id="@+id/fragmentShiftDialog_btn_repUp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/repUp"
+        android:scaleType="fitXY"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_chkB_dayOff"
         app:srcCompat="@drawable/ic_arrow_drop_up"
@@ -149,10 +151,11 @@
 
     <ImageButton
         android:id="@+id/fragmentShiftDialog_btn_repDown"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/repDown"
+        android:scaleType="fitXY"
         app:layout_constraintLeft_toLeftOf="@+id/fragmentShiftDialog_tv_nRep"
         app:layout_constraintRight_toRightOf="@+id/fragmentShiftDialog_tv_nRep"
         app:layout_constraintTop_toBottomOf="@+id/fragmentShiftDialog_tv_nRep"
