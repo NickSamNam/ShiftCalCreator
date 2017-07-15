@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private DatePickerDialogFragment dpdf;
     private ArrayList<Shift> shifts;
+    private SingleToast toast = new SingleToast();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 Calendar to = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO);
                 if (to.before(from)) {
                     to.setTime(from.getTime());
-                    Toast.makeText(MainActivity.this, R.string.errorToBeforeFrom, Toast.LENGTH_LONG).show();
+                    toast.showText(MainActivity.this, R.string.errorToBeforeFrom, Toast.LENGTH_LONG);
                 }
                 tvDateTo.setText(dateFormat.format(to.getTime()));
             }
@@ -193,11 +194,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (etName.getText().toString().equals(""))
-                    Toast.makeText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG).show();
+                    toast.showText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG);
                 else if (shifts.size() < 2)
-                    Toast.makeText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG).show();
+                    toast.showText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG);
                 else
-                    Toast.makeText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG).show();
+                    toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
             }
         });
     }
@@ -208,6 +209,12 @@ public class MainActivity extends AppCompatActivity {
         outState.putSerializable("from", dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime());
         outState.putSerializable("to", dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime());
         outState.putSerializable("shifts", shifts);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        toast.cancel();
     }
 
     @Override

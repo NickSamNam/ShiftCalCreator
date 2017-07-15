@@ -30,6 +30,7 @@ public class ShiftDialogFragment extends DialogFragment {
     private Shift shift;
     private OnShiftCreatedListener onShiftCreatedListener;
     private TimePickerDialogFragment tpdf;
+    private SingleToast toast = new SingleToast();
 
     @Nullable
     @Override
@@ -165,7 +166,7 @@ public class ShiftDialogFragment extends DialogFragment {
                         onShiftCreatedListener.onShiftCreated(shift);
                     dismiss();
                 } else
-                    Toast.makeText(getActivity(), R.string.errorNoShiftName, Toast.LENGTH_LONG).show();
+                    toast.showText(getActivity(), R.string.errorNoShiftName, Toast.LENGTH_LONG);
             }
         });
 
@@ -200,6 +201,12 @@ public class ShiftDialogFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("shift", shift);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        toast.cancel();
     }
 
     public void setOnShiftCreatedListener(OnShiftCreatedListener onShiftCreatedListener) {
