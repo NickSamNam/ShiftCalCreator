@@ -1,6 +1,8 @@
 package com.nicknam.shiftcalcreator;
 
 import android.annotation.SuppressLint;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,11 +47,16 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
         if (!s.isDayOff()) {
             holder.timeStart.setText(timeFormat.format(s.getTimeStart().getTime()));
             holder.timeEnd.setText(timeFormat.format(s.getTimeEnd().getTime()));
+            holder.timeStart.setVisibility(View.VISIBLE);
+            holder.dash.setVisibility(View.VISIBLE);
+            holder.timeEnd.setVisibility(View.VISIBLE);
+            holder.dayOff.setVisibility(View.INVISIBLE);
         }
         else {
-            holder.timeEnd.setText(R.string.dayOff);
-            holder.centre.setVisibility(View.INVISIBLE);
             holder.timeStart.setVisibility(View.INVISIBLE);
+            holder.dash.setVisibility(View.INVISIBLE);
+            holder.timeEnd.setVisibility(View.INVISIBLE);
+            holder.dayOff.setVisibility(View.VISIBLE);
         }
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +65,17 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
                     onItemClickListener.onItemClick(holder.getAdapterPosition());
             }
         });
+
+//        Set constraints
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone((ConstraintLayout) holder.root);
+
+        if (!s.isDayOff())
+            constraintSet.connect(R.id.itemShift_tv_name, ConstraintSet.RIGHT, R.id.itemShift_tv_timeStart, ConstraintSet.LEFT, 8);
+        else
+            constraintSet.connect(R.id.itemShift_tv_name, ConstraintSet.RIGHT, R.id.itemShift_tv_dayOff, ConstraintSet.LEFT, 8);
+
+        constraintSet.applyTo((ConstraintLayout) holder.root);
     }
 
     @Override
@@ -89,7 +107,7 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
 
     public static class ShiftHolder extends RecyclerView.ViewHolder {
         private View root;
-        private TextView name, repetition, timeStart, timeEnd, centre;
+        private TextView name, repetition, timeStart, timeEnd, dash, dayOff;
 
         private ShiftHolder(View itemView) {
             super(itemView);
@@ -98,7 +116,8 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
             repetition = (TextView) itemView.findViewById(R.id.itemShift_tv_repetition);
             timeStart = (TextView) itemView.findViewById(R.id.itemShift_tv_timeStart);
             timeEnd = (TextView) itemView.findViewById(R.id.itemShift_tv_timeEnd);
-            centre = (TextView) itemView.findViewById(R.id.itemShift_tv_centre);
+            dash = (TextView) itemView.findViewById(R.id.itemShift_tv_dash);
+            dayOff = (TextView) itemView.findViewById(R.id.itemShift_tv_dayOff);
         }
     }
 }
