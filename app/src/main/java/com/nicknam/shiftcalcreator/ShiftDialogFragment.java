@@ -3,9 +3,13 @@ package com.nicknam.shiftcalcreator;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -46,8 +50,13 @@ public class ShiftDialogFragment extends DialogFragment {
         final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         timeFormat.setTimeZone(Calendar.getInstance().getTimeZone());
 
-//        Restore saved instance state
-        if (savedInstanceState != null) {
+//        Use arguments or restore saved instance state or create new
+            Bundle args = getArguments();
+        if (args != null) {
+            shift = new Shift((Shift) args.getSerializable("shift"));
+            tpdf = new TimePickerDialogFragment();
+            btnAdd.setText(R.string.save);
+        } else if (savedInstanceState != null) {
             shift = (Shift) savedInstanceState.getSerializable("shift");
             tpdf = (TimePickerDialogFragment) getFragmentManager().findFragmentByTag("timePicker");
 
@@ -156,6 +165,22 @@ public class ShiftDialogFragment extends DialogFragment {
                     dismiss();
                 } else
                     Toast.makeText(getActivity(), R.string.errorNoShiftName, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //        Lose focus on done
+        etName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // TODO: 15-7-2017 fix line below
+//                    v.findViewById(R.id.fragmentShiftDialog_root).requestFocus();
+                    if (getDialog().getCurrentFocus() != null) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(getDialog().getCurrentFocus().getWindowToken(), 0);
+                    }
+                }
+                return false;
             }
         });
 

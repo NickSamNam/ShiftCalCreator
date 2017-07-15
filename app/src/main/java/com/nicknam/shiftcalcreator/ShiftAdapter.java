@@ -18,9 +18,14 @@ import java.util.Collections;
 
 public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder> implements ItemTouchHelperAdapter {
     private ArrayList<Shift> shifts;
+    private OnItemClickListener onItemClickListener;
 
     public ShiftAdapter(ArrayList<Shift> shifts) {
         this.shifts = shifts;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -30,7 +35,7 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ShiftHolder holder, int position) {
+    public void onBindViewHolder(final ShiftHolder holder, final int position) {
         final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         timeFormat.setTimeZone(Calendar.getInstance().getTimeZone());
 
@@ -46,6 +51,13 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
             holder.timeStart.setVisibility(View.INVISIBLE);
             holder.timeEnd.setVisibility(View.INVISIBLE);
         }
+        holder.root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null)
+                    onItemClickListener.onItemClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -71,12 +83,17 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
         notifyItemRemoved(position);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public static class ShiftHolder extends RecyclerView.ViewHolder {
-        public TextView name, repetition, timeStart, timeEnd, centre;
+        private View root;
+        private TextView name, repetition, timeStart, timeEnd, centre;
 
-        public ShiftHolder(View itemView) {
+        private ShiftHolder(View itemView) {
             super(itemView);
-
+            root = itemView;
             name = (TextView) itemView.findViewById(R.id.itemShift_tv_name);
             repetition = (TextView) itemView.findViewById(R.id.itemShift_tv_repetition);
             timeStart = (TextView) itemView.findViewById(R.id.itemShift_tv_timeStart);

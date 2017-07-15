@@ -133,6 +133,24 @@ public class MainActivity extends AppCompatActivity {
 //        Setup List of shifts
         rvShifts.setLayoutManager(new LinearLayoutManager(this));
         final ShiftAdapter shiftAdapter = new ShiftAdapter(shifts);
+        shiftAdapter.setOnItemClickListener(new ShiftAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(final int position) {
+                Bundle args = new Bundle();
+                args.putSerializable("shift", shifts.get(position));
+                ShiftDialogFragment shiftDialogFragment = new ShiftDialogFragment();
+                shiftDialogFragment.setArguments(args);
+                shiftDialogFragment.setCancelable(false);
+                shiftDialogFragment.setOnShiftCreatedListener(new ShiftDialogFragment.OnShiftCreatedListener() {
+                    @Override
+                    public void onShiftCreated(Shift shift) {
+                        shifts.set(position, shift);
+                        shiftAdapter.notifyItemChanged(position);
+                    }
+                });
+                shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
+            }
+        });
         rvShifts.setAdapter(shiftAdapter);
         new ItemTouchHelper(new ItemTouchHelperCallback(shiftAdapter)).attachToRecyclerView(rvShifts);
 
@@ -158,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    findViewById(R.id.root).requestFocus();
+                    findViewById(R.id.activityMain_root).requestFocus();
                     if (getCurrentFocus() != null) {
                         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);

@@ -31,6 +31,14 @@ public class Shift implements Serializable {
         dayOff = false;
     }
 
+    public Shift(Shift shift) {
+        this.name = shift.getName();
+        this.repetition = shift.getRepetition();
+        this.timeStart = shift.getTimeStart();
+        this.timeEnd = shift.getTimeEnd();
+        this.dayOff = shift.isDayOff();
+    }
+
     public String getName() {
         return name;
     }
