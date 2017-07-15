@@ -35,6 +35,7 @@ public class ShiftDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_shift_dialog, container, false);
+        final View root = v.findViewById(R.id.fragmentShiftDialog_root);
         final EditText etName = (EditText) v.findViewById(R.id.fragmentShiftDialog_et_name);
         final CheckBox chkDayOff = (CheckBox) v.findViewById(R.id.fragmentShiftDialog_chkB_dayOff);
         final TextView tvNRep = (TextView) v.findViewById(R.id.fragmentShiftDialog_tv_nRep);
@@ -173,8 +174,7 @@ public class ShiftDialogFragment extends DialogFragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // TODO: 15-7-2017 fix line below
-//                    v.findViewById(R.id.fragmentShiftDialog_root).requestFocus();
+                    root.requestFocus();
                     if (getDialog().getCurrentFocus() != null) {
                         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(getDialog().getCurrentFocus().getWindowToken(), 0);
