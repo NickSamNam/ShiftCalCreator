@@ -19,7 +19,7 @@
         android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:ems="10"
-        android:hint="@string/blankShift"
+        android:hint="@string/eventName"
         android:imeOptions="actionDone"
         android:inputType="textCapWords"
         android:textAppearance="@style/TextAppearance.AppCompat"
