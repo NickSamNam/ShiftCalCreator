@@ -36,8 +36,8 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
 
         Shift s = shifts.get(position);
         holder.name.setText(s.getName());
+        holder.repetition.setText(s.getRepetition() + "x");
         if (!s.isDayOff()) {
-            holder.repetition.setText(s.getRepetition() + "x");
             holder.timeStart.setText(timeFormat.format(s.getTimeStart().getTime()));
             holder.timeEnd.setText(timeFormat.format(s.getTimeEnd().getTime()));
         }

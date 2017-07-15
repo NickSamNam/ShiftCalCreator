@@ -92,10 +92,6 @@ public class ShiftDialogFragment extends DialogFragment {
                 else
                     visibility = View.VISIBLE;
 
-                v.findViewById(R.id.fragmentShiftDialog_repetitionLabel).setVisibility(visibility);
-                tvNRep.setVisibility(visibility);
-                btnRepUp.setVisibility(visibility);
-                btnRepDown.setVisibility(visibility);
                 contTimeFrom.setVisibility(visibility);
                 contTimeTo.setVisibility(visibility);
             }
