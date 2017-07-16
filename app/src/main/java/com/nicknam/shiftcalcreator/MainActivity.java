@@ -19,10 +19,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.Name;
+import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Version;
+import net.fortuna.ical4j.util.UidGenerator;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.SocketException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -197,8 +211,42 @@ public class MainActivity extends AppCompatActivity {
                     toast.showText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG);
                 else if (shifts.size() < 2)
                     toast.showText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG);
-                else
+                else {
+//                    Create and initiate calendar
+                    net.fortuna.ical4j.model.Calendar cal = new net.fortuna.ical4j.model.Calendar();
+                    cal.getProperties().add(new ProdId("-//" + getString(R.string.com_name) + "//" + getString(R.string.app_name) + " " + getString(R.string.app_version) + "//" + Locale.getDefault().getLanguage()));
+                    cal.getProperties().add(Version.VERSION_2_0);
+                    cal.getProperties().add(CalScale.GREGORIAN);
+                    cal.getProperties().add(new Name(etName.getText().toString()));
+
+//                    Add events to calendar
+                    final VEvent testEvent = new VEvent(new net.fortuna.ical4j.model.Date(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime()), new net.fortuna.ical4j.model.Date(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime()), "test");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                UidGenerator testUid = new UidGenerator("1");
+                                testEvent.getProperties().add(testUid.generateUid());
+                            } catch (SocketException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    cal.getComponents().add(testEvent);
+
+//                    Write calendar to cache
+                    try {
+                        FileOutputStream fOut = new FileOutputStream(new File(getCacheDir(), "cal.ics"));
+                        CalendarOutputter calOut = new CalendarOutputter();
+                        calOut.output(cal, fOut);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        toast.showText(MainActivity.this, R.string.error, Toast.LENGTH_LONG);
+                        return;
+                    }
+
                     toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
+                }
             }
         });
     }
