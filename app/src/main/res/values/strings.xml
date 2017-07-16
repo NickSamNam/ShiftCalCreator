@@ -23,8 +23,8 @@
     <string name="save">Save</string>
     <string name="eventName">Event Name</string>
     <string name="errorNoCalName">Please enter a calendar name.</string>
-    <string name="errorMoreShifts">A minumum of 2 shifts is required.</string>
+    <string name="errorMoreShifts">A minimum of 2 shifts is required.</string>
     <string name="calSaved">Calendar saved!</string>
     <string name="calName">Calendar Name</string>
-    <string name="error">An error has occured.</string>
+    <string name="error">An error has occurred.</string>
 </resources>

@@ -25,6 +25,7 @@ import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Name;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
+import net.fortuna.ical4j.model.property.XProperty;
 import net.fortuna.ical4j.util.UidGenerator;
 
 import java.io.File;
@@ -212,40 +213,36 @@ public class MainActivity extends AppCompatActivity {
                 else if (shifts.size() < 2)
                     toast.showText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG);
                 else {
-//                    Create and initiate calendar
-                    net.fortuna.ical4j.model.Calendar cal = new net.fortuna.ical4j.model.Calendar();
-                    cal.getProperties().add(new ProdId("-//" + getString(R.string.com_name) + "//" + getString(R.string.app_name) + " " + getString(R.string.app_version) + "//" + Locale.getDefault().getLanguage()));
-                    cal.getProperties().add(Version.VERSION_2_0);
-                    cal.getProperties().add(CalScale.GREGORIAN);
-                    cal.getProperties().add(new Name(etName.getText().toString()));
+//                    Export calendar
+                    final ICal iCal = new ICal(MainActivity.this, etName.getText().toString());
+                    iCal.setOnExportResultListener(new ICal.OnExportResultListener() {
+                        @Override
+                        public void onSaved() {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
+                                }
+                            });
+                        }
 
-//                    Add events to calendar
-                    final VEvent testEvent = new VEvent(new net.fortuna.ical4j.model.Date(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime()), new net.fortuna.ical4j.model.Date(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime()), "test");
+                        @Override
+                        public void onFailed(Exception e) {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    toast.showText(MainActivity.this, R.string.error, Toast.LENGTH_LONG);
+                                }
+                            });
+                        }
+                    });
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                UidGenerator testUid = new UidGenerator("1");
-                                testEvent.getProperties().add(testUid.generateUid());
-                            } catch (SocketException e) {
-                                e.printStackTrace();
-                            }
+                            iCal.addEvents(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime(), dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime(), shifts);
+                            iCal.exportToCache();
                         }
-                    });
-                    cal.getComponents().add(testEvent);
-
-//                    Write calendar to cache
-                    try {
-                        FileOutputStream fOut = new FileOutputStream(new File(getCacheDir(), "cal.ics"));
-                        CalendarOutputter calOut = new CalendarOutputter();
-                        calOut.output(cal, fOut);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        toast.showText(MainActivity.this, R.string.error, Toast.LENGTH_LONG);
-                        return;
-                    }
-
-                    toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
+                    }).start();
                 }
             }
         });
