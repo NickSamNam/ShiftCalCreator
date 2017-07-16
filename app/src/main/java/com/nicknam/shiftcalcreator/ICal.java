@@ -40,15 +40,15 @@ public class ICal {
     }
 
     // TODO: 16-7-2017 Fix event creation
-    public void addEvents(Date from, Date to, List<Shift> shifts) {
-        final VEvent testEvent = new VEvent(new net.fortuna.ical4j.model.Date(from), new net.fortuna.ical4j.model.Date(to), "test");
-        try {
-            UidGenerator testUid = new UidGenerator(String.valueOf(android.os.Process.myPid()));
-            testEvent.getProperties().add(testUid.generateUid());
-            cal.getComponents().add(testEvent);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+    public void addEvents(java.util.Calendar to, List<Shift> shifts) {
+        for (Shift shift : shifts)
+            if (!shift.isDayOff())
+                for (int i = 0; i < shift.getRepetition(); i++) {
+                    Shift shiftCopy = new Shift(shift);
+                    shiftCopy.getTimeStart().add(java.util.Calendar.DAY_OF_MONTH, i);
+                    shiftCopy.getTimeEnd().add(java.util.Calendar.DAY_OF_MONTH, i);
+                    addEvent(shiftCopy);
+                }
     }
 
     // TODO: 16-7-2017 Fix event creation

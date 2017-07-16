@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -210,6 +211,30 @@ public class MainActivity extends AppCompatActivity {
         btnAddToCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Set correct date to shifts
+                int dFrom = 0;
+                for (Shift shift : shifts) {
+                    Calendar timeStart = shift.getTimeStart();
+                    Calendar timeEnd = shift.getTimeEnd();
+                    Calendar dateStart = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
+
+                    timeStart.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
+                    timeStart.add(Calendar.DAY_OF_MONTH, dFrom);
+                    timeEnd.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
+                    timeEnd.add(Calendar.DAY_OF_MONTH, dFrom);
+
+                    if (timeEnd.before(timeStart)) {
+                        timeEnd.add(Calendar.DAY_OF_MONTH, 1);
+                        dFrom += shift.getRepetition()+2;
+                    } else
+                        dFrom += shift.getRepetition();
+                    Log.d("Shift",
+                            "\tFrom: " + dateFormat.format(shift.getTimeStart().getTime()) + " " + shift.getTimeStart().get(Calendar.HOUR_OF_DAY) + ":" + shift.getTimeStart().get(Calendar.MINUTE) +
+                            "\tTill: " + dateFormat.format(shift.getTimeEnd().getTime()) + " " + shift.getTimeEnd().get(Calendar.HOUR_OF_DAY) + ":" + shift.getTimeEnd().get(Calendar.MINUTE) +
+                            "\tRepetition: " + shift.getRepetition());
+                }
+
+//                Check for correct input
                 if (etName.getText().toString().equals(""))
                     toast.showText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG);
                 else if (shifts.size() < 2)
@@ -248,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            iCal.addEvents(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM).getTime(), dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO).getTime(), shifts);
+                            iCal.addEvents(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO), shifts);
                             iCal.exportToCache();
                         }
                     }).start();
