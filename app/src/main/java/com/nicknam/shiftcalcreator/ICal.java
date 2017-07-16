@@ -95,8 +95,12 @@ public class ICal {
                     e.printStackTrace();
                 }
         }
-        if (onExportResultListener != null)
-            onExportResultListener.onSaved(file);
+        if (onExportResultListener != null) {
+            if (file.exists() && !file.isDirectory())
+                onExportResultListener.onSaved(file);
+            else
+                onExportResultListener.onFailed(null);
+        }
     }
 
     public interface OnExportResultListener {
