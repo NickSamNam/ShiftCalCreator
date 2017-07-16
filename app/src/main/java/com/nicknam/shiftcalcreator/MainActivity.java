@@ -2,6 +2,8 @@ package com.nicknam.shiftcalcreator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -217,11 +219,18 @@ public class MainActivity extends AppCompatActivity {
                     final ICal iCal = new ICal(MainActivity.this, etName.getText().toString());
                     iCal.setOnExportResultListener(new ICal.OnExportResultListener() {
                         @Override
-                        public void onSaved() {
+                        public void onSaved(final File file) {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
+                                    Uri uri = FileProvider.getUriForFile(MainActivity.this, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+                                    String mime = getContentResolver().getType(uri);
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_VIEW);
+                                    intent.setDataAndType(uri, mime);
+                                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    startActivity(intent);
+//                                    toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
                                 }
                             });
                         }

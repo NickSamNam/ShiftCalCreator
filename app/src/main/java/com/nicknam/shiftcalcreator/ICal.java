@@ -70,9 +70,12 @@ public class ICal {
     }
 
     public void exportToCache() {
+        File folder = new File(context.getCacheDir(), "cals");
+        folder.mkdir();
+        File file = new File(folder, "cal.ics");
         FileOutputStream fileOut = null;
         try {
-            fileOut = new FileOutputStream(new File(context.getCacheDir(), "cal.ics"));
+            fileOut = new FileOutputStream(file);
             CalendarOutputter calOut = new CalendarOutputter();
             calOut.output(cal, fileOut);
         } catch (IOException e) {
@@ -93,11 +96,11 @@ public class ICal {
                 }
         }
         if (onExportResultListener != null)
-            onExportResultListener.onSaved();
+            onExportResultListener.onSaved(file);
     }
 
     public interface OnExportResultListener {
-        void onSaved();
+        void onSaved(File file);
         void onFailed(Exception e);
     }
 }
