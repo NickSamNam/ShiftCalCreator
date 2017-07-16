@@ -4,9 +4,16 @@ import android.content.Context;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.DtEnd;
+import net.fortuna.ical4j.model.property.DtStamp;
+import net.fortuna.ical4j.model.property.DtStart;
 import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.XProperty;
 import net.fortuna.ical4j.util.UidGenerator;
@@ -16,7 +23,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketException;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,7 +45,7 @@ public class ICal {
         cal.getProperties().add(new XProperty("X-WR-CALNAME", name));
     }
 
-    // TODO: 16-7-2017 Fix event creation
+    // TODO: 16-7-2017 Fix bug only one shift gets added
     public void addEvents(java.util.Calendar to, List<Shift> shifts) {
         for (Shift shift : shifts)
             if (!shift.isDayOff())
@@ -51,9 +57,14 @@ public class ICal {
                 }
     }
 
-    // TODO: 16-7-2017 Fix event creation
+    // TODO: 16-7-2017 Add repetition
     private void addEvent(Shift shift) {
-        final VEvent event = new VEvent(new net.fortuna.ical4j.model.Date(shift.getTimeStart()), new net.fortuna.ical4j.model.Date(shift.getTimeEnd()), shift.getName());
+        PropertyList<Property> props = new PropertyList<>();
+        props.add(new Summary(shift.getName()));
+        props.add(new DtStart(new DateTime(shift.getTimeStart().getTime())));
+        props.add(new DtEnd(new DateTime(shift.getTimeEnd().getTime())));
+        props.add(new DtStamp(new DateTime(java.util.Calendar.getInstance().getTime())));
+
         UidGenerator uid;
         try {
             uid = new UidGenerator(String.valueOf(android.os.Process.myPid()));
@@ -61,8 +72,9 @@ public class ICal {
             e.printStackTrace();
             return;
         }
-        event.getProperties().add(uid.generateUid());
-        cal.getComponents().add(event);
+        props.add(uid.generateUid());
+
+        cal.getComponents().add(new VEvent(props));
     }
 
     public void setOnExportResultListener(OnExportResultListener onExportResultListener) {
