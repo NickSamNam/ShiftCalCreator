@@ -46,7 +46,6 @@ public class ICal {
         cal.getProperties().add(new XProperty("X-WR-CALNAME", name));
     }
 
-    // TODO: 16-7-2017 Fix bug only one shift gets added
     public void addEvents(java.util.Calendar to, List<Shift> shifts) {
         for (Shift shift : shifts)
             if (!shift.isDayOff())
@@ -58,7 +57,7 @@ public class ICal {
                 }
     }
 
-    // TODO: 16-7-2017 Add repetition
+    // TODO: 16-7-2017 Add recurrence
     private void addEvent(Shift shift) {
         PropertyList<Property> props = new PropertyList<>();
         props.add(new Summary(shift.getName()));
