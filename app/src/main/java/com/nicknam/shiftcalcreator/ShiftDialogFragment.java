@@ -28,6 +28,7 @@ import java.util.Calendar;
 
 public class ShiftDialogFragment extends DialogFragment {
     private Shift shift;
+    private boolean isDayOff = false;
     private OnShiftCreatedListener onShiftCreatedListener;
     private TimePickerDialogFragment tpdf;
     private SingleToast toast = new SingleToast();
@@ -38,7 +39,6 @@ public class ShiftDialogFragment extends DialogFragment {
         final View v = inflater.inflate(R.layout.fragment_shift_dialog, container, false);
         final View root = v.findViewById(R.id.fragmentShiftDialog_root);
         final EditText etName = (EditText) v.findViewById(R.id.fragmentShiftDialog_et_name);
-        final CheckBox chkDayOff = (CheckBox) v.findViewById(R.id.fragmentShiftDialog_chkB_dayOff);
         final TextView tvNRep = (TextView) v.findViewById(R.id.fragmentShiftDialog_tv_nRep);
         final ImageButton btnRepUp = (ImageButton) v.findViewById(R.id.fragmentShiftDialog_btn_repUp);
         final ImageButton btnRepDown = (ImageButton) v.findViewById(R.id.fragmentShiftDialog_btn_repDown);
@@ -55,22 +55,37 @@ public class ShiftDialogFragment extends DialogFragment {
 //        Use arguments or restore saved instance state or create new
             Bundle args = getArguments();
         if (args != null) {
-            shift = new Shift((Shift) args.getSerializable("shift"));
+            Shift shiftTemp = (Shift) args.getSerializable("shift");
+            if (shiftTemp != null)
+                shift = new Shift(shiftTemp);
             tpdf = new TimePickerDialogFragment();
             btnAdd.setText(R.string.save);
+            isDayOff = args.getBoolean("isDayOff");
         } else if (savedInstanceState != null) {
             shift = (Shift) savedInstanceState.getSerializable("shift");
             tpdf = (TimePickerDialogFragment) getFragmentManager().findFragmentByTag("timePicker");
+        }
 
-            if (tpdf == null)
-                tpdf = new TimePickerDialogFragment();
-
+        if (shift == null) {
+            shift = new Shift();
+            shift.setDayOff(isDayOff);
+        }
+        if (tpdf == null) {
+            tpdf = new TimePickerDialogFragment();
             tpdf.getTime(TimePickerDialogFragment.TIME_FROM).setTime(shift.getTimeStart().getTime());
             tpdf.getTime(TimePickerDialogFragment.TIME_TO).setTime(shift.getTimeEnd().getTime());
-        } else {
-            shift = new Shift();
-            tpdf = new TimePickerDialogFragment();
         }
+
+//        Day off or shift
+        int visibility;
+        if (shift.isDayOff())
+            visibility = View.INVISIBLE;
+        else
+            visibility = View.VISIBLE;
+
+        contTimeFrom.setVisibility(visibility);
+        contTimeTo.setVisibility(visibility);
+        etName.setVisibility(visibility);
 
 //        Set time listeners
         tpdf.setTimeFromSetListener(new TimePickerDialogFragment.OnTimeSetListener() {
@@ -91,23 +106,6 @@ public class ShiftDialogFragment extends DialogFragment {
             }
         });
 
-//        Day off check listener
-        chkDayOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                shift.setDayOff(isChecked);
-
-                int visibility;
-                if (isChecked)
-                    visibility = View.INVISIBLE;
-                else
-                    visibility = View.VISIBLE;
-
-                contTimeFrom.setVisibility(visibility);
-                contTimeTo.setVisibility(visibility);
-                etName.setVisibility(visibility);
-            }
-        });
 
 //        Time from click listener
         contTimeFrom.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +186,6 @@ public class ShiftDialogFragment extends DialogFragment {
 
 //        Fill in view with shift data
         etName.setText(shift.getName());
-        chkDayOff.setChecked(shift.isDayOff());
         tvNRep.setText(shift.getRepetition() + "x");
         tvTimeFrom.setText(timeFormat.format(shift.getTimeStart().getTime()));
         tvTimeTo.setText(timeFormat.format(shift.getTimeEnd().getTime()));

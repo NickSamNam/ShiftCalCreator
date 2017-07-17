@@ -67,17 +67,6 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
                     onItemClickListener.onItemClick(holder.getAdapterPosition());
             }
         });
-
-//        Set constraints
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone((ConstraintLayout) holder.root);
-
-        if (!s.isDayOff())
-            constraintSet.connect(R.id.itemShift_tv_name, ConstraintSet.RIGHT, R.id.itemShift_tv_timeStart, ConstraintSet.LEFT, 8);
-        else
-            constraintSet.connect(R.id.itemShift_tv_name, ConstraintSet.RIGHT, R.id.itemShift_tv_dayOff, ConstraintSet.LEFT, 8);
-
-        constraintSet.applyTo((ConstraintLayout) holder.root);
     }
 
     @Override

@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
         final RecyclerView rvShifts = (RecyclerView) findViewById(R.id.activityMain_rv_shifts);
         final Button btnAddShift = (Button) findViewById(R.id.activityMain_btn_addShift);
+        final Button btnAddDayOff = (Button) findViewById(R.id.activityMain_btn_addDayoff);
         final Button btnAddToCal = (Button) findViewById(R.id.activityMain_btn_addToCal);
 
 //        Create date format
@@ -180,6 +181,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ShiftDialogFragment shiftDialogFragment = new ShiftDialogFragment();
+                shiftDialogFragment.setCancelable(false);
+                shiftDialogFragment.setOnShiftCreatedListener(new ShiftDialogFragment.OnShiftCreatedListener() {
+                    @Override
+                    public void onShiftCreated(Shift shift) {
+                        shifts.add(shift);
+                        shiftAdapter.notifyDataSetChanged();
+                    }
+                });
+                shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
+            }
+        });
+
+//        AddDayOff button
+        btnAddDayOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putBoolean("isDayOff", true);
+                ShiftDialogFragment shiftDialogFragment = new ShiftDialogFragment();
+                shiftDialogFragment.setArguments(args);
                 shiftDialogFragment.setCancelable(false);
                 shiftDialogFragment.setOnShiftCreatedListener(new ShiftDialogFragment.OnShiftCreatedListener() {
                     @Override
