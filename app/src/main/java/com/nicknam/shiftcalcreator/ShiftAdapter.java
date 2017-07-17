@@ -45,6 +45,7 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
         holder.name.setText(s.getName());
         holder.repetition.setText(s.getRepetition() + "x");
         if (!s.isDayOff()) {
+            holder.name.setVisibility(View.VISIBLE);
             holder.timeStart.setText(timeFormat.format(s.getTimeStart().getTime()));
             holder.timeEnd.setText(timeFormat.format(s.getTimeEnd().getTime()));
             holder.timeStart.setVisibility(View.VISIBLE);
@@ -53,6 +54,7 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
             holder.dayOff.setVisibility(View.INVISIBLE);
         }
         else {
+            holder.name.setVisibility(View.INVISIBLE);
             holder.timeStart.setVisibility(View.INVISIBLE);
             holder.dash.setVisibility(View.INVISIBLE);
             holder.timeEnd.setVisibility(View.INVISIBLE);

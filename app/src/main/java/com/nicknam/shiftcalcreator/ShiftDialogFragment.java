@@ -105,6 +105,7 @@ public class ShiftDialogFragment extends DialogFragment {
 
                 contTimeFrom.setVisibility(visibility);
                 contTimeTo.setVisibility(visibility);
+                etName.setVisibility(visibility);
             }
         });
 
@@ -161,7 +162,7 @@ public class ShiftDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 shift.setName(etName.getText().toString());
-                if (shift.getName() != null && !shift.getName().equals("")) {
+                if (shift.isDayOff() || !shift.getName().equals("")) {
                     if (onShiftCreatedListener != null)
                         onShiftCreatedListener.onShiftCreated(shift);
                     dismiss();
