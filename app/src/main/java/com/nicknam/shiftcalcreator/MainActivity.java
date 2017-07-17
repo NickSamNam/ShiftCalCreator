@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 //        Set up ads
         MobileAds.initialize(this, getString(R.string.admob_id));
         interstitialAd = new InterstitialAd(this);
-//        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
+        // TODO: 18-7-2017 replace line below with: interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
         final EditText etName = (EditText) findViewById(R.id.toolbarSchedule_et_name);
