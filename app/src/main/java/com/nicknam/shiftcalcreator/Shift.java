@@ -84,8 +84,8 @@ public class Shift implements Serializable {
         return "Shift{" +
                 "name='" + name + '\'' +
                 ", repetition=" + repetition +
-                ", timeStart=" + timeStart +
-                ", timeEnd=" + timeEnd +
+                ", timeStart=" + timeStart.get(Calendar.DAY_OF_MONTH) + "-" + timeStart.get(Calendar.MONTH) + "-" + timeStart.get(Calendar.YEAR) + " " + timeStart.get(Calendar.HOUR_OF_DAY) + ":" + timeStart.get(Calendar.MINUTE) +
+                ", timeEnd=" + timeEnd.get(Calendar.DAY_OF_MONTH) + "-" + timeEnd.get(Calendar.MONTH) + "-" + timeEnd.get(Calendar.YEAR) + " " + timeEnd.get(Calendar.HOUR_OF_DAY) + ":" + timeEnd.get(Calendar.MINUTE) +
                 ", dayOff=" + dayOff +
                 '}';
     }
