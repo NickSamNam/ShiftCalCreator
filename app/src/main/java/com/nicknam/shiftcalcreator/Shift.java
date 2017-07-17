@@ -78,4 +78,15 @@ public class Shift implements Serializable {
     public void setTimeEnd(Calendar timeEnd) {
         this.timeEnd = timeEnd;
     }
+
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "name='" + name + '\'' +
+                ", repetition=" + repetition +
+                ", timeStart=" + timeStart +
+                ", timeEnd=" + timeEnd +
+                ", dayOff=" + dayOff +
+                '}';
+    }
 }

@@ -228,10 +228,6 @@ public class MainActivity extends AppCompatActivity {
                         dFrom += shift.getRepetition()+2;
                     } else
                         dFrom += shift.getRepetition();
-                    Log.d("Shift",
-                            "\tFrom: " + dateFormat.format(shift.getTimeStart().getTime()) + " " + shift.getTimeStart().get(Calendar.HOUR_OF_DAY) + ":" + shift.getTimeStart().get(Calendar.MINUTE) +
-                            "\tTill: " + dateFormat.format(shift.getTimeEnd().getTime()) + " " + shift.getTimeEnd().get(Calendar.HOUR_OF_DAY) + ":" + shift.getTimeEnd().get(Calendar.MINUTE) +
-                            "\tRepetition: " + shift.getRepetition());
                 }
 
 //                Check for correct input
@@ -255,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
                                     intent.setDataAndType(uri, mime);
                                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                     startActivity(intent);
-//                                    toast.showText(MainActivity.this, R.string.calSaved, Toast.LENGTH_LONG);
                                 }
                             });
                         }
