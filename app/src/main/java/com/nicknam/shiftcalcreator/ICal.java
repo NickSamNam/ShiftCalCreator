@@ -5,15 +5,18 @@ import android.util.Log;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
+import net.fortuna.ical4j.model.Recur;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.DtEnd;
 import net.fortuna.ical4j.model.property.DtStamp;
 import net.fortuna.ical4j.model.property.DtStart;
 import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.XProperty;
@@ -35,6 +38,7 @@ public class ICal {
     private final Calendar cal;
     private final Context context;
     private OnExportResultListener onExportResultListener;
+    private RRule recurrence;
 
     public ICal(Context context, String name) {
         cal = new Calendar();
@@ -46,7 +50,7 @@ public class ICal {
         cal.getProperties().add(new XProperty("X-WR-CALNAME", name));
     }
 
-    public void addEvents(java.util.Calendar to, List<Shift> shifts) {
+    public void addEvents(List<Shift> shifts) {
         for (Shift shift : shifts)
             if (!shift.isDayOff())
                 for (int i = 0; i < shift.getRepetition(); i++) {
@@ -57,13 +61,14 @@ public class ICal {
                 }
     }
 
-    // TODO: 16-7-2017 Add recurrence
     private void addEvent(Shift shift) {
         PropertyList<Property> props = new PropertyList<>();
         props.add(new Summary(shift.getName()));
         props.add(new DtStart(new DateTime(shift.getTimeStart().getTime())));
         props.add(new DtEnd(new DateTime(shift.getTimeEnd().getTime())));
         props.add(new DtStamp(new DateTime(java.util.Calendar.getInstance().getTime())));
+        if (recurrence != null)
+            props.add(recurrence);
 
         UidGenerator uid;
         try {
@@ -79,6 +84,14 @@ public class ICal {
 
     public void setOnExportResultListener(OnExportResultListener onExportResultListener) {
         this.onExportResultListener = onExportResultListener;
+    }
+
+    public void setRecurrence(int recurrence, java.util.Calendar until) {
+        Recur recur = new Recur();
+        recur.setFrequency(Recur.DAILY);
+        recur.setInterval(recurrence);
+        recur.setUntil(new Date(until));
+        this.recurrence = new RRule(recur);
     }
 
     public void exportToCache() {

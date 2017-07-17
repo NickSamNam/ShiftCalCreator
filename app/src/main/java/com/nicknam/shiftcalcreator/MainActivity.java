@@ -211,25 +211,6 @@ public class MainActivity extends AppCompatActivity {
         btnAddToCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Set correct date to shifts
-                int dFrom = 0;
-                for (Shift shift : shifts) {
-                    Calendar timeStart = shift.getTimeStart();
-                    Calendar timeEnd = shift.getTimeEnd();
-                    Calendar dateStart = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
-
-                    timeStart.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
-                    timeStart.add(Calendar.DAY_OF_MONTH, dFrom);
-                    timeEnd.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
-                    timeEnd.add(Calendar.DAY_OF_MONTH, dFrom);
-
-                    if (timeEnd.before(timeStart)) {
-                        timeEnd.add(Calendar.DAY_OF_MONTH, 1);
-                        dFrom += shift.getRepetition()+2;
-                    } else
-                        dFrom += shift.getRepetition();
-                }
-
 //                Check for correct input
                 if (etName.getText().toString().equals(""))
                     toast.showText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG);
@@ -265,10 +246,35 @@ public class MainActivity extends AppCompatActivity {
                             });
                         }
                     });
+
+
+//                Set correct date to shifts
+                    int dFrom = 0;
+                    for (Shift shift : shifts) {
+                        Calendar timeStart = shift.getTimeStart();
+                        Calendar timeEnd = shift.getTimeEnd();
+                        Calendar dateStart = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
+
+                        timeStart.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
+                        timeStart.add(Calendar.DAY_OF_MONTH, dFrom);
+                        timeEnd.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
+                        timeEnd.add(Calendar.DAY_OF_MONTH, dFrom);
+
+                        if (timeEnd.before(timeStart)) {
+                            timeEnd.add(Calendar.DAY_OF_MONTH, 1);
+                            dFrom += shift.getRepetition()+2;
+                        } else
+                            dFrom += shift.getRepetition();
+                    }
+
+//                    Set recurrence
+                    iCal.setRecurrence(dFrom + shifts.get(shifts.size()-1).getRepetition(), dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO));
+
+//                    Create cal.ics
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            iCal.addEvents(dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO), shifts);
+                            iCal.addEvents(shifts);
                             iCal.exportToCache();
                         }
                     }).start();
