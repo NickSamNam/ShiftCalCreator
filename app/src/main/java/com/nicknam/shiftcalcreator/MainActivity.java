@@ -302,18 +302,21 @@ public class MainActivity extends AppCompatActivity {
 
                         dFrom += shift.getRepetition();
 
-                        try {
-                            Shift prevShift = shifts.get(i - 1);
-                            if (prevShift.isDayOff())
-                                return;
-                            Calendar timeWindow = (Calendar) prevShift.getTimeEnd().clone();
-                            timeWindow.add(Calendar.DAY_OF_MONTH, 1);
-                            if (timeStart.before(timeWindow)) {
-                                timeStart.add(Calendar.DAY_OF_MONTH, 1);
-                                timeEnd.add(Calendar.DAY_OF_MONTH, 1);
-                                dFrom++;
-                            }
-                        } catch (IndexOutOfBoundsException ignored) {}
+                        if (!shift.isDayOff()) {
+                            try {
+                                Shift prevShift = shifts.get(i - 1);
+                                if (!prevShift.isDayOff()) {
+                                    Calendar timeWindow = (Calendar) prevShift.getTimeEnd().clone();
+                                    timeWindow.add(Calendar.DAY_OF_MONTH, 1);
+                                    if (!timeStart.after(timeWindow)) {
+                                        timeStart.add(Calendar.DAY_OF_MONTH, 1);
+                                        timeEnd.add(Calendar.DAY_OF_MONTH, 1);
+                                        dFrom++;
+                                    }
+                                }
+                            } catch (IndexOutOfBoundsException ignored) {}
+                        }
+                        Log.d("Shift", shift.toString());
                     }
 
 //                    Set recurrence
