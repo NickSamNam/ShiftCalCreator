@@ -196,6 +196,18 @@ public class ShiftDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (shift.isDayOff()) {
+            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().height = (int) getResources().getDimension(R.dimen.dayOff_dialog_height);
+            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().width = (int) getResources().getDimension(R.dimen.dayOff_dialog_width);
+        } else {
+            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().height = (int) getResources().getDimension(R.dimen.shift_dialog_height);
+            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().width = (int) getResources().getDimension(R.dimen.shift_dialog_width);
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("shift", shift);
