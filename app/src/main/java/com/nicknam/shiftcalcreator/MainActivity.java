@@ -262,13 +262,13 @@ public class MainActivity extends AppCompatActivity {
 
                         if (timeEnd.before(timeStart)) {
                             timeEnd.add(Calendar.DAY_OF_MONTH, 1);
-                            dFrom += shift.getRepetition()+2;
+                            dFrom += shift.getRepetition()+1;
                         } else
                             dFrom += shift.getRepetition();
                     }
 
 //                    Set recurrence
-                    iCal.setRecurrence(dFrom + shifts.get(shifts.size()-1).getRepetition(), dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO));
+                    iCal.setRecurrence(dFrom, dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_TO));
 
 //                    Create cal.ics
                     new Thread(new Runnable() {
