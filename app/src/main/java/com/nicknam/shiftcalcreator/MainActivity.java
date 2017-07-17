@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
 //        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        interstitialAd.loadAd(new AdRequest.Builder().build());
 
         final EditText etName = (EditText) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
@@ -266,21 +265,8 @@ public class MainActivity extends AppCompatActivity {
                                     intent.setDataAndType(uri, mime);
                                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                                    interstitialAd.setAdListener(new AdListener() {
-                                        @Override
-                                        public void onAdClosed() {
-                                            super.onAdClosed();
-                                            interstitialAd.loadAd(new AdRequest.Builder().build());
-                                            startActivity(intent);
-                                        }
-                                    });
-
-                                    if (interstitialAd.isLoaded())
-                                        interstitialAd.show();
-                                    else {
-                                        interstitialAd.loadAd(new AdRequest.Builder().build());
-                                        startActivity(intent);
-                                    }
+                                    interstitialAd.loadAd(new AdRequest.Builder().build());
+                                    startActivity(intent);
                                 }
                             });
                         }
@@ -358,6 +344,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         toast.cancel();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (interstitialAd.isLoaded())
+            interstitialAd.show();
     }
 
     @Override
