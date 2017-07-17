@@ -18,8 +18,10 @@ public class Shift implements Serializable {
         repetition = 1;
         timeStart = Calendar.getInstance();
         timeStart.set(0, 0, 0, 9, 0, 0);
+        timeStart.set(Calendar.MILLISECOND, 0);
         timeEnd = Calendar.getInstance();
         timeEnd.set(0, 0, 0, 17, 0, 0);
+        timeEnd.set(Calendar.MILLISECOND, 0);
         dayOff = false;
     }
 

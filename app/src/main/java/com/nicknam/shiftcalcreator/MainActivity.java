@@ -271,7 +271,9 @@ public class MainActivity extends AppCompatActivity {
 
 //                Set correct date to shifts
                     int dFrom = 0;
-                    for (Shift shift : shifts) {
+                    for (int i = 0; i < shifts.size(); i++) {
+                        Shift shift = shifts.get(i);
+
                         Calendar timeStart = shift.getTimeStart();
                         Calendar timeEnd = shift.getTimeEnd();
                         Calendar dateStart = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
@@ -281,11 +283,23 @@ public class MainActivity extends AppCompatActivity {
                         timeEnd.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
                         timeEnd.add(Calendar.DAY_OF_MONTH, dFrom);
 
-                        if (timeEnd.before(timeStart)) {
+                        if (timeEnd.before(timeStart))
                             timeEnd.add(Calendar.DAY_OF_MONTH, 1);
-                            dFrom += shift.getRepetition()+1;
-                        } else
-                            dFrom += shift.getRepetition();
+
+                        dFrom += shift.getRepetition();
+
+                        try {
+                            Shift prevShift = shifts.get(i - 1);
+                            if (prevShift.isDayOff())
+                                return;
+                            Calendar timeWindow = (Calendar) prevShift.getTimeEnd().clone();
+                            timeWindow.add(Calendar.DAY_OF_MONTH, 1);
+                            if (timeStart.before(timeWindow)) {
+                                timeStart.add(Calendar.DAY_OF_MONTH, 1);
+                                timeEnd.add(Calendar.DAY_OF_MONTH, 1);
+                                dFrom++;
+                            }
+                        } catch (IndexOutOfBoundsException ignored) {}
                     }
 
 //                    Set recurrence
