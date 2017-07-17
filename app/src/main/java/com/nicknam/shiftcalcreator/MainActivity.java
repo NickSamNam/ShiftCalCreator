@@ -22,6 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
@@ -47,11 +52,19 @@ public class MainActivity extends AppCompatActivity {
     private DatePickerDialogFragment dpdf;
     private ArrayList<Shift> shifts;
     private SingleToast toast = new SingleToast();
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Set up ads
+        MobileAds.initialize(this, getString(R.string.admob_id));
+        interstitialAd = new InterstitialAd(this);
+//        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
+        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
 
         final EditText etName = (EditText) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
@@ -248,11 +261,26 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     Uri uri = FileProvider.getUriForFile(MainActivity.this, BuildConfig.APPLICATION_ID + ".fileprovider", file);
                                     String mime = getContentResolver().getType(uri);
-                                    Intent intent = new Intent();
+                                    final Intent intent = new Intent();
                                     intent.setAction(Intent.ACTION_VIEW);
                                     intent.setDataAndType(uri, mime);
                                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                    startActivity(intent);
+
+                                    interstitialAd.setAdListener(new AdListener() {
+                                        @Override
+                                        public void onAdClosed() {
+                                            super.onAdClosed();
+                                            interstitialAd.loadAd(new AdRequest.Builder().build());
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                                    if (interstitialAd.isLoaded())
+                                        interstitialAd.show();
+                                    else {
+                                        interstitialAd.loadAd(new AdRequest.Builder().build());
+                                        startActivity(intent);
+                                    }
                                 }
                             });
                         }
