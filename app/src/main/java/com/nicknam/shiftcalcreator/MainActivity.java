@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
                             shiftEnd.set(Calendar.SECOND, timeEnd.get(Calendar.SECOND));
                             shiftEnd.set(Calendar.MILLISECOND, timeEnd.get(Calendar.MILLISECOND));
 
-                            if (timeEnd.before(timeStart))
+                            if (shiftEnd.before(shiftStart))
                                 shiftEnd.add(Calendar.DAY_OF_MONTH, 1);
 
                             try {
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                                     Calendar timeWindow = (Calendar) prevShift.getTimeEnd().clone();
                                     timeWindow.add(Calendar.DAY_OF_MONTH, prevShift.getRepetition() - 1);
                                     timeWindow.add(Calendar.HOUR_OF_DAY, 12);
-                                    if (!timeStart.after(timeWindow)) {
+                                    if (!shiftStart.after(timeWindow)) {
                                         shiftStart.add(Calendar.DAY_OF_MONTH, 1);
                                         shiftEnd.add(Calendar.DAY_OF_MONTH, 1);
                                         dFrom++;
