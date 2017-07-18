@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,9 +73,9 @@ public class ShiftDialogFragment extends DialogFragment {
         }
         if (tpdf == null) {
             tpdf = new TimePickerDialogFragment();
-            tpdf.getTime(TimePickerDialogFragment.TIME_FROM).setTime(shift.getTimeStart().getTime());
-            tpdf.getTime(TimePickerDialogFragment.TIME_TO).setTime(shift.getTimeEnd().getTime());
         }
+        tpdf.getTime(TimePickerDialogFragment.TIME_FROM).setTime(shift.getTimeStart().getTime());
+        tpdf.getTime(TimePickerDialogFragment.TIME_TO).setTime(shift.getTimeEnd().getTime());
 
 //        Day off or shift
         int visibility;

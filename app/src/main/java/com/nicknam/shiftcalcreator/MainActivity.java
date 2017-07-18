@@ -316,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             } catch (IndexOutOfBoundsException ignored) {}
                         }
+                        // TODO: 18-7-2017 Fix that it works every time
                         Log.d("Shift", shift.toString());
                     }
 
