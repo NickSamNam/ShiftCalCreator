@@ -1,13 +1,12 @@
 package com.nicknam.shiftcalcreator;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by snick on 13-7-2017.

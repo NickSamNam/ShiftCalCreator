@@ -1,7 +1,6 @@
 package com.nicknam.shiftcalcreator;
 
 import android.content.Context;
-import android.util.Log;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;

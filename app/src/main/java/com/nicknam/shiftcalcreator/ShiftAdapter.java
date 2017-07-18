@@ -1,8 +1,6 @@
 package com.nicknam.shiftcalcreator;
 
 import android.annotation.SuppressLint;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
