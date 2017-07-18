@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 /**
@@ -19,6 +18,7 @@ import java.util.Collections;
 public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder> implements ItemTouchHelperAdapter {
     private final ArrayList<Shift> shifts;
     private OnItemClickListener onItemClickListener;
+    private DateFormat timeFormat;
 
     public ShiftAdapter(ArrayList<Shift> shifts) {
         this.shifts = shifts;
@@ -30,15 +30,13 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
 
     @Override
     public ShiftHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        timeFormat = android.text.format.DateFormat.getTimeFormat(parent.getContext());
         return new ShiftHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shift, parent, false));
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final ShiftHolder holder, final int position) {
-        final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
-        timeFormat.setTimeZone(Calendar.getInstance().getTimeZone());
-
         Shift s = shifts.get(position);
         holder.name.setText(s.getName());
         holder.repetition.setText(s.getRepetition() + "x");

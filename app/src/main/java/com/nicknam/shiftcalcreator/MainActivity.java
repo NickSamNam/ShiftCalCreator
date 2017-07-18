@@ -59,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         final Button btnAddToCal = (Button) findViewById(R.id.activityMain_btn_addToCal);
 
 //        Create date format
-        final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
-        dateFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+        final DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(this);
 
 //        Recover saved instance state
         if (savedInstanceState != null) {

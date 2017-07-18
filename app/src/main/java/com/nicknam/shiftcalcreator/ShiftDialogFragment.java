@@ -47,8 +47,7 @@ public class ShiftDialogFragment extends DialogFragment {
         final Button btnCancel = (Button) v.findViewById(R.id.fragmentShiftDialog_btn_cancel);
         final Button btnAdd = (Button) v.findViewById(R.id.fragmentShiftDialog_btn_add);
 
-        final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
-        timeFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+        final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getActivity());
 
 //        Use arguments or restore saved instance state or create new
             Bundle args = getArguments();
