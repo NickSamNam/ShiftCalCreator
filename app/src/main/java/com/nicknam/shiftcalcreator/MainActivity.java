@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO: 18-7-2017 replace line below with: interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
-        final EditText etName = (EditText) findViewById(R.id.toolbarSchedule_et_name);
+        final TextView tvName = (TextView) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
         final TextView tvDateTo = (TextView) findViewById(R.id.mainActivity_tv_dateTo);
         final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        Lose focus on done
-        ((EditText) findViewById(R.id.toolbarSchedule_et_name)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        tvName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -246,13 +246,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Check for correct input
-                if (etName.getText().toString().equals(""))
+                if (tvName.getText().toString().equals(""))
                     toast.showText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG);
                 else if (shifts.size() < 2)
                     toast.showText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG);
                 else {
 //                    Export calendar
-                    final ICal iCal = new ICal(MainActivity.this, etName.getText().toString());
+                    final ICal iCal = new ICal(MainActivity.this, tvName.getText().toString());
                     iCal.setOnExportResultListener(new ICal.OnExportResultListener() {
                         @Override
                         public void onSaved(final File file) {
@@ -313,7 +313,6 @@ public class MainActivity extends AppCompatActivity {
                                     Calendar timeWindow = (Calendar) prevShift.getTimeEnd().clone();
                                     timeWindow.add(Calendar.DAY_OF_MONTH, prevShift.getRepetition() - 1);
                                     timeWindow.add(Calendar.HOUR_OF_DAY, 12);
-                                    Log.d("Shift", timeWindow.toString());
                                     if (!timeStart.after(timeWindow)) {
                                         timeStart.add(Calendar.DAY_OF_MONTH, 1);
                                         timeEnd.add(Calendar.DAY_OF_MONTH, 1);

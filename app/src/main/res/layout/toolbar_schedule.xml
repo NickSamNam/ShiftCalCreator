@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <TextView
             android:id="@+id/toolbarSchedule_et_name"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -18,21 +18,20 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:background="@android:color/transparent"
-            android:hint="@string/calName"
-            android:imeOptions="actionDone"
+            android:clickable="false"
+            android:gravity="center_vertical"
             android:inputType="none"
+            android:longClickable="false"
             android:maxLines="1"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColorHighlight="@color/colorAccent"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/toolbarSchedule_btn_restart"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlHardcoded"
-            android:text="@string/app_name"
-            android:clickable="false"
-            android:longClickable="false"
-            android:cursorVisible="false" />
+            tools:ignore="RtlHardcoded" />
 
         <ImageButton
             android:id="@+id/toolbarSchedule_btn_restart"
