@@ -307,7 +307,9 @@ public class MainActivity extends AppCompatActivity {
                                 Shift prevShift = shifts.get(i - 1);
                                 if (!prevShift.isDayOff()) {
                                     Calendar timeWindow = (Calendar) prevShift.getTimeEnd().clone();
-                                    timeWindow.add(Calendar.DAY_OF_MONTH, 1);
+                                    timeWindow.add(Calendar.DAY_OF_MONTH, prevShift.getRepetition() - 1);
+                                    timeWindow.add(Calendar.HOUR_OF_DAY, 12);
+                                    Log.d("Shift", timeWindow.toString());
                                     if (!timeStart.after(timeWindow)) {
                                         timeStart.add(Calendar.DAY_OF_MONTH, 1);
                                         timeEnd.add(Calendar.DAY_OF_MONTH, 1);
@@ -316,8 +318,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             } catch (IndexOutOfBoundsException ignored) {}
                         }
-                        // TODO: 18-7-2017 Fix that it works every time
-                        Log.d("Shift", shift.toString());
                     }
 
 //                    Set recurrence
