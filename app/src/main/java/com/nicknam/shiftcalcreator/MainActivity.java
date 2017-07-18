@@ -26,6 +26,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.nicknam.shiftcalcreator.util.IabHelper;
+import com.nicknam.shiftcalcreator.util.IabResult;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.component.VEvent;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Shift> shifts;
     private SingleToast toast = new SingleToast();
     private InterstitialAd interstitialAd;
+    private IabHelper iabHelper;
+    private boolean iabEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
         // TODO: 18-7-2017 replace line below with: interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+//        Set up in-app purchases
+//        // TODO: 18-7-2017 Replace empty string with public license key
+        iabHelper = new IabHelper(this, "");
+        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                iabEnabled = result.isSuccess();
+            }
+        });
 
         final EditText etName = (EditText) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
@@ -360,6 +374,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (iabHelper != null) {
+            try {
+                iabHelper.dispose();
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+            iabHelper = null;
+        }
     }
 
     @Override
