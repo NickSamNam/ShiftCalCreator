@@ -30,4 +30,5 @@
     <string name="addDayOff">Add Day Off</string>
     <string name="admob_id">ca-app-pub-2114038879047980~3399368758</string>
     <string name="interstitial_ad_id">ca-app-pub-2114038879047980/6352835151</string>
+    <string name="noCalSupport">No app found supporting iCal import.</string>
 </resources>

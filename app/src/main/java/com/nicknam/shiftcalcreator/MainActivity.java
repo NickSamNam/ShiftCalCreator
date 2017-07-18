@@ -2,6 +2,7 @@ package com.nicknam.shiftcalcreator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -265,8 +266,11 @@ public class MainActivity extends AppCompatActivity {
                                     intent.setDataAndType(uri, mime);
                                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                                    interstitialAd.loadAd(new AdRequest.Builder().build());
-                                    startActivity(intent);
+                                    if (intent.resolveActivity(MainActivity.this.getPackageManager()) != null) {
+                                        interstitialAd.loadAd(new AdRequest.Builder().build());
+                                        startActivity(intent);
+                                    } else
+                                        toast.showText(MainActivity.this, R.string.noCalSupport, Toast.LENGTH_LONG);
                                 }
                             });
                         }
