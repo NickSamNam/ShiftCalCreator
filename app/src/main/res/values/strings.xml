@@ -11,7 +11,7 @@
     <string name="shifts">Shifts</string>
     <string name="addToCal">Add To Calendar</string>
     <string name="addShift">Add Shift</string>
-    <string name="exit">Verlaten</string>
+    <string name="exit">Exit</string>
     <string name="exitMessage">Do your really want to exit?</string>
     <string name="blankShift">Blank Shift</string>
     <string name="dayOff">Day Off</string>

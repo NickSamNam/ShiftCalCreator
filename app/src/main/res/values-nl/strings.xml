@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ShiftCal Creator</string>
     <string name="add">Toevoegen</string>
     <string name="addDayOff">Voeg Vrije Dag Toe</string>
     <string name="addShift">Voeg Ploeg Toe</string>
@@ -17,7 +16,7 @@
     <string name="errorNoShiftName">Voer alstublieft een ploeg naam in.</string>
     <string name="errorToBeforeFrom">De einddatum kan niet voor de begindatum zijn.</string>
     <string name="eventName">Evenement Naam</string>
-    <string name="exit">Evenement Naam</string>
+    <string name="exit">Verlaten</string>
     <string name="exitMessage">Wilt u echt de app verlaten?</string>
     <string name="from">Van</string>
     <string name="noCalSupport">Geen app gevonden met iCal importeer ondersteuning.</string>
