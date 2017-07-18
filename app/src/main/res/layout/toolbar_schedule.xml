@@ -20,7 +20,7 @@
             android:background="@android:color/transparent"
             android:hint="@string/calName"
             android:imeOptions="actionDone"
-            android:inputType="textCapWords"
+            android:inputType="none"
             android:maxLines="1"
             android:textColorHighlight="@color/colorAccent"
             android:textSize="24sp"
@@ -28,7 +28,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/toolbarSchedule_btn_restart"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:text="@string/app_name"
+            android:clickable="false"
+            android:longClickable="false"
+            android:cursorVisible="false" />
 
         <ImageButton
             android:id="@+id/toolbarSchedule_btn_restart"
