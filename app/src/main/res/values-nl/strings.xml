@@ -4,10 +4,6 @@
     <string name="addDayOff">Voeg Vrije Dag Toe</string>
     <string name="addShift">Voeg Ploeg Toe</string>
     <string name="addToCal">Toevoegen Aan Kalender</string>
-    <string name="blankSchedule">Blanco Schema</string>
-    <string name="blankShift">Blanco Ploeg</string>
-    <string name="calName">Kalender Naam</string>
-    <string name="calSaved">Kalender opgeslagen!</string>
     <string name="dayOff">Vrije Dag</string>
     <string name="error">Er is een fout opgetreden.</string>
     <string name="errorMoreShifts">Een minimum van 2 ploegen is benodigd.</string>

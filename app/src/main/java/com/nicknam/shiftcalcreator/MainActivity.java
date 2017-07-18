@@ -31,10 +31,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     private DatePickerDialogFragment dpdf;
     private ArrayList<Shift> shifts;
-    private SingleToast toast = new SingleToast();
+    private final SingleToast toast = new SingleToast();
     private InterstitialAd interstitialAd;
 
     @Override
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
         final RecyclerView rvShifts = (RecyclerView) findViewById(R.id.activityMain_rv_shifts);
         final Button btnAddShift = (Button) findViewById(R.id.activityMain_btn_addShift);
-        final Button btnAddDayOff = (Button) findViewById(R.id.activityMain_btn_addDayoff);
+        final Button btnAddDayOff = (Button) findViewById(R.id.activityMain_btn_addDayOff);
         final Button btnAddToCal = (Button) findViewById(R.id.activityMain_btn_addToCal);
 
 //        Create date format
@@ -340,11 +339,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (interstitialAd.isLoaded())
             interstitialAd.show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

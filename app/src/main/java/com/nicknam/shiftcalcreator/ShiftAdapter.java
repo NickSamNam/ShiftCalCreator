@@ -17,7 +17,7 @@ import java.util.Collections;
  */
 
 public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder> implements ItemTouchHelperAdapter {
-    private ArrayList<Shift> shifts;
+    private final ArrayList<Shift> shifts;
     private OnItemClickListener onItemClickListener;
 
     public ShiftAdapter(ArrayList<Shift> shifts) {
@@ -95,8 +95,13 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
     }
 
     public static class ShiftHolder extends RecyclerView.ViewHolder {
-        private View root;
-        private TextView name, repetition, timeStart, timeEnd, dash, dayOff;
+        private final View root;
+        private final TextView name;
+        private final TextView repetition;
+        private final TextView timeStart;
+        private final TextView timeEnd;
+        private final TextView dash;
+        private final TextView dayOff;
 
         private ShiftHolder(View itemView) {
             super(itemView);

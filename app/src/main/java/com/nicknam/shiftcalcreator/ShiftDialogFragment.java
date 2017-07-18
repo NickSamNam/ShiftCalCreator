@@ -29,7 +29,7 @@ public class ShiftDialogFragment extends DialogFragment {
     private boolean isDayOff = false;
     private OnShiftCreatedListener onShiftCreatedListener;
     private TimePickerDialogFragment tpdf;
-    private SingleToast toast = new SingleToast();
+    private final SingleToast toast = new SingleToast();
 
     @Nullable
     @Override

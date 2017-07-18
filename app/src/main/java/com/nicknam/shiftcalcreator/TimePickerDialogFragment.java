@@ -17,7 +17,8 @@ public class TimePickerDialogFragment extends DialogFragment implements TimePick
     public final static int TIME_FROM = 0;
     public final static int TIME_TO = 1;
 
-    private Calendar timeFrom, timeTo;
+    private final Calendar timeFrom;
+    private final Calendar timeTo;
     private OnTimeSetListener timeFromSetListener, timeToSetListener;
 
     private int tpdHour, tpdMinute, tpdTag;

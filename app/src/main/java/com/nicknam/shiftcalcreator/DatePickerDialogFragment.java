@@ -16,7 +16,8 @@ public class DatePickerDialogFragment extends DialogFragment implements DatePick
     public final static int CALENDAR_FROM = 0;
     public final static int CALENDAR_TO = 1;
 
-    private Calendar calFrom, calTo;
+    private final Calendar calFrom;
+    private final Calendar calTo;
     private OnDateSetListener calFromSetListener, calToSetListener;
 
     private int dpdYear, dpdMonth, dpdDayOfMonth, dpdTag;
