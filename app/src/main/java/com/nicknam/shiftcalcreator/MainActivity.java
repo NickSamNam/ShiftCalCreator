@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
 //        Set up ads
         MobileAds.initialize(this, getString(R.string.admob_id));
         interstitialAd = new InterstitialAd(this);
-        // TODO: 18-7-2017 replace line below with: interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
-        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
 
         final TextView tvName = (TextView) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
