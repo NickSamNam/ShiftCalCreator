@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ShiftCal Creator</string>
-    <string name="app_version">v1.0</string>
-    <string name="com_name">Sam Nicknam</string>
+    <string name="app_name" translatable="false">ShiftCal Creator</string>
+    <string name="app_version" translatable="false">v1.0</string>
+    <string name="com_name" translatable="false">Sam Nicknam</string>
     <string name="blankSchedule">Blank Schedule</string>
     <string name="from">From</string>
     <string name="to">To</string>
@@ -11,7 +11,7 @@
     <string name="shifts">Shifts</string>
     <string name="addToCal">Add To Calendar</string>
     <string name="addShift">Add Shift</string>
-    <string name="exit">Exit</string>
+    <string name="exit">Verlaten</string>
     <string name="exitMessage">Do your really want to exit?</string>
     <string name="blankShift">Blank Shift</string>
     <string name="dayOff">Day Off</string>
@@ -28,7 +28,7 @@
     <string name="calName">Calendar Name</string>
     <string name="error">An error has occurred.</string>
     <string name="addDayOff">Add Day Off</string>
-    <string name="admob_id">ca-app-pub-2114038879047980~3399368758</string>
-    <string name="interstitial_ad_id">ca-app-pub-2114038879047980/6352835151</string>
+    <string name="admob_id" translatable="false">ca-app-pub-2114038879047980~3399368758</string>
+    <string name="interstitial_ad_id" translatable="false">ca-app-pub-2114038879047980/6352835151</string>
     <string name="noCalSupport">No app found supporting iCal import.</string>
 </resources>

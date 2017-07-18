@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShiftCal Creator</string>
+    <string name="add">Toevoegen</string>
+    <string name="addDayOff">Voeg Vrije Dag Toe</string>
+    <string name="addShift">Voeg Ploeg Toe</string>
+    <string name="addToCal">Toevoegen Aan Kalender</string>
+    <string name="blankSchedule">Blanco Schema</string>
+    <string name="blankShift">Blanco Ploeg</string>
+    <string name="calName">Kalender Naam</string>
+    <string name="calSaved">Kalender opgeslagen!</string>
+    <string name="com_name"></string>
+    <string name="dayOff">Vrije Dag</string>
+    <string name="error">Er is een fout opgetreden.</string>
+    <string name="errorMoreShifts">Een minimum van 2 ploegen is benodigd.</string>
+    <string name="errorNoCalName">Voer alstublieft een kalender naam in.</string>
+    <string name="errorNoShiftName">Voer alstublieft een ploeg naam in.</string>
+    <string name="errorToBeforeFrom">De einddatum kan niet voor de begindatum zijn.</string>
+    <string name="eventName">Evenement Naam</string>
+    <string name="exit">Evenement Naam</string>
+    <string name="exitMessage">Wilt u echt de app verlaten?</string>
+    <string name="from">Van</string>
+    <string name="noCalSupport">Geen app gevonden met iCal importeer ondersteuning.</string>
+    <string name="repDown">Herhaling omlaag</string>
+    <string name="repUp">Herhaling omhoog</string>
+    <string name="repetition">Herhaling</string>
+    <string name="restart">Herstarten</string>
+    <string name="restartMessage">Wilt u echt herstarten?</string>
+    <string name="save">Opslaan</string>
+    <string name="shifts">Ploegen</string>
+    <string name="to">Tot</string>
+</resources>
