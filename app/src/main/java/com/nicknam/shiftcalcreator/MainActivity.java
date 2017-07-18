@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -276,17 +277,27 @@ public class MainActivity extends AppCompatActivity {
                         Calendar timeEnd = shift.getTimeEnd();
                         Calendar dateStart = dpdf.getCalendar(DatePickerDialogFragment.CALENDAR_FROM);
 
-                        timeStart.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
-                        timeStart.add(Calendar.DAY_OF_MONTH, dFrom);
-                        timeEnd.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
-                        timeEnd.add(Calendar.DAY_OF_MONTH, dFrom);
+                        Calendar shiftStart = (Calendar) dateStart.clone();
+                        Calendar shiftEnd = (Calendar) dateStart.clone();
 
-                        if (timeEnd.before(timeStart))
-                            timeEnd.add(Calendar.DAY_OF_MONTH, 1);
-
-                        dFrom += shift.getRepetition();
+                        shiftStart.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
+                        shiftStart.add(Calendar.DAY_OF_MONTH, dFrom);
+                        shiftEnd.set(dateStart.get(Calendar.YEAR), dateStart.get(Calendar.MONTH), dateStart.get(Calendar.DAY_OF_MONTH));
+                        shiftEnd.add(Calendar.DAY_OF_MONTH, dFrom);
 
                         if (!shift.isDayOff()) {
+                            shiftStart.set(Calendar.HOUR_OF_DAY, timeStart.get(Calendar.HOUR_OF_DAY));
+                            shiftStart.set(Calendar.MINUTE, timeStart.get(Calendar.MINUTE));
+                            shiftStart.set(Calendar.SECOND, timeStart.get(Calendar.SECOND));
+                            shiftStart.set(Calendar.MILLISECOND, timeStart.get(Calendar.MILLISECOND));
+                            shiftEnd.set(Calendar.HOUR_OF_DAY, timeEnd.get(Calendar.HOUR_OF_DAY));
+                            shiftEnd.set(Calendar.MINUTE, timeEnd.get(Calendar.MINUTE));
+                            shiftEnd.set(Calendar.SECOND, timeEnd.get(Calendar.SECOND));
+                            shiftEnd.set(Calendar.MILLISECOND, timeEnd.get(Calendar.MILLISECOND));
+
+                            if (timeEnd.before(timeStart))
+                                shiftEnd.add(Calendar.DAY_OF_MONTH, 1);
+
                             try {
                                 Shift prevShift = shifts.get(i - 1);
                                 if (!prevShift.isDayOff()) {
@@ -294,13 +305,17 @@ public class MainActivity extends AppCompatActivity {
                                     timeWindow.add(Calendar.DAY_OF_MONTH, prevShift.getRepetition() - 1);
                                     timeWindow.add(Calendar.HOUR_OF_DAY, 12);
                                     if (!timeStart.after(timeWindow)) {
-                                        timeStart.add(Calendar.DAY_OF_MONTH, 1);
-                                        timeEnd.add(Calendar.DAY_OF_MONTH, 1);
+                                        shiftStart.add(Calendar.DAY_OF_MONTH, 1);
+                                        shiftEnd.add(Calendar.DAY_OF_MONTH, 1);
                                         dFrom++;
                                     }
                                 }
                             } catch (IndexOutOfBoundsException ignored) {}
                         }
+
+                        dFrom += shift.getRepetition();
+                        shift.setTimeStart(shiftStart);
+                        shift.setTimeEnd(shiftEnd);
                     }
 
 //                    Set recurrence
