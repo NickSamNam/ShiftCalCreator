@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -30,12 +31,14 @@ public class ShiftDialogFragment extends DialogFragment {
     private OnShiftCreatedListener onShiftCreatedListener;
     private TimePickerDialogFragment tpdf;
     private final SingleToast toast = new SingleToast();
+    private View root;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         final View v = inflater.inflate(R.layout.fragment_shift_dialog, container, false);
-        final View root = v.findViewById(R.id.fragmentShiftDialog_root);
+        root = v.findViewById(R.id.fragmentShiftDialog_root);
         final EditText etName = (EditText) v.findViewById(R.id.fragmentShiftDialog_et_name);
         final TextView tvNRep = (TextView) v.findViewById(R.id.fragmentShiftDialog_tv_nRep);
         final ImageButton btnRepUp = (ImageButton) v.findViewById(R.id.fragmentShiftDialog_btn_repUp);
@@ -162,7 +165,7 @@ public class ShiftDialogFragment extends DialogFragment {
                         onShiftCreatedListener.onShiftCreated(shift);
                     dismiss();
                 } else
-                    toast.showText(getActivity(), R.string.errorNoShiftName, Toast.LENGTH_LONG);
+                toast.showText(getActivity(), R.string.errorNoShiftName, Toast.LENGTH_LONG);
             }
         });
 
@@ -195,13 +198,10 @@ public class ShiftDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (shift.isDayOff()) {
-            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().height = (int) getResources().getDimension(R.dimen.dayOff_dialog_height);
-            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().width = (int) getResources().getDimension(R.dimen.dayOff_dialog_width);
-        } else {
-            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().height = (int) getResources().getDimension(R.dimen.shift_dialog_height);
-            getDialog().findViewById(R.id.fragmentShiftDialog_root).getLayoutParams().width = (int) getResources().getDimension(R.dimen.shift_dialog_width);
-        }
+        if (shift.isDayOff())
+            getDialog().getWindow().setLayout((int) getResources().getDimension(R.dimen.dayOff_dialog_width), (int) getResources().getDimension(R.dimen.dayOff_dialog_height));
+        else
+            getDialog().getWindow().setLayout((int) getResources().getDimension(R.dimen.shift_dialog_width), (int) getResources().getDimension(R.dimen.shift_dialog_height));
     }
 
     @Override
