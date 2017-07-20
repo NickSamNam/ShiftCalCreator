@@ -228,9 +228,20 @@ public class MainActivity extends AppCompatActivity {
 //                Check for correct input
                 if (tvName.getText().toString().equals(""))
                     toast.showText(MainActivity.this, R.string.errorNoCalName, Toast.LENGTH_LONG);
-                else if (shifts.size() < 2)
-                    toast.showText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG);
                 else {
+//                    Check for min of 1 shift.
+                    boolean noShifts = true;
+                    for (Shift shift : shifts) {
+                        if (!shift.isDayOff()) {
+                            noShifts = false;
+                            break;
+                        }
+                    }
+                    if (noShifts) {
+                        toast.showText(MainActivity.this, R.string.errorMoreShifts, Toast.LENGTH_LONG);
+                        return;
+                    }
+
 //                    Export calendar
                     final ICal iCal = new ICal(MainActivity.this, tvName.getText().toString());
                     iCal.setOnExportResultListener(new ICal.OnExportResultListener() {

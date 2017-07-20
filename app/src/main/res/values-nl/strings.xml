@@ -6,7 +6,7 @@
     <string name="addToCal">Toevoegen Aan Kalender</string>
     <string name="dayOff">Vrije Dag</string>
     <string name="error">Er is een fout opgetreden.</string>
-    <string name="errorMoreShifts">Een minimum van 2 ploegen is benodigd.</string>
+    <string name="errorMoreShifts">Een minimum van 1 ploeg is benodigd.</string>
     <string name="errorNoCalName">Voer alstublieft een kalender naam in.</string>
     <string name="errorNoShiftName">Voer alstublieft een ploeg naam in.</string>
     <string name="errorToBeforeFrom">De einddatum kan niet voor de begindatum zijn.</string>

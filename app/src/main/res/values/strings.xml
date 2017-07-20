@@ -21,7 +21,7 @@
     <string name="save">Save</string>
     <string name="eventName">Event Name</string>
     <string name="errorNoCalName">Please enter a calendar name.</string>
-    <string name="errorMoreShifts">A minimum of 2 shifts is required.</string>
+    <string name="errorMoreShifts">A minimum of 1 shift is required.</string>
     <string name="error">An error has occurred.</string>
     <string name="addDayOff">Add Day Off</string>
     <string name="admob_id" translatable="false">ca-app-pub-2114038879047980~3399368758</string>
