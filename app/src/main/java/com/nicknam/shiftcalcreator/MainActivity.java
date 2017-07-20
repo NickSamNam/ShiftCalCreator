@@ -2,6 +2,8 @@ package com.nicknam.shiftcalcreator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
@@ -29,6 +31,11 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.target.ViewTarget;
 
 public class MainActivity extends AppCompatActivity {
     private DatePickerDialogFragment dpdf;
@@ -180,6 +187,20 @@ public class MainActivity extends AppCompatActivity {
                     public void onShiftCreated(Shift shift) {
                         shifts.add(shift);
                         shiftAdapter.notifyDataSetChanged();
+
+//                        Show tutorial 2
+                        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+                        if (!preferences.getBoolean("tut2", false)) {
+                            preferences.edit().putBoolean("tut2", true).apply();
+                        new MaterialShowcaseView.Builder(MainActivity.this)
+                                .withRectangleShape()
+                                .setMaskColour(getResources().getColor(R.color.colorTutorialMask))
+                                .setDismissTextColor(Color.BLACK)
+                                .setTarget(findViewById(R.id.activityMain_anker_rv_shifts))
+                                .setContentText(R.string.tut2_op)
+                                .setDismissText(R.string.tut_btn_done)
+                                .show();
+                        }
                     }
                 });
                 shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
@@ -342,6 +363,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        Show tutorial 1
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        if (!preferences.getBoolean("tut1", false)) {
+            preferences.edit().putBoolean("tut1", true).apply();
+            ShowcaseConfig config = new ShowcaseConfig();
+            config.setMaskColor(getResources().getColor(R.color.colorTutorialMask));
+            config.setDismissTextColor(Color.BLACK);
+            MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
+            sequence.setConfig(config);
+            sequence.addSequenceItem(contDateFrom, getString(R.string.tut1_from), getString(R.string.tut_btn_done));
+            sequence.addSequenceItem(contDateTo, getString(R.string.tut1_to), getString(R.string.tut_btn_done));
+            sequence.addSequenceItem(btnAddShift, getString(R.string.tut1_addShift), getString(R.string.tut_btn_done));
+            sequence.start();
+        }
     }
 
     @Override

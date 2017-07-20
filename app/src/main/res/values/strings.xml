@@ -27,4 +27,9 @@
     <string name="admob_id" translatable="false">ca-app-pub-2114038879047980~3399368758</string>
     <string name="interstitial_ad_id" translatable="false">ca-app-pub-2114038879047980/6352835151</string>
     <string name="noCalSupport">No app found supporting iCal import.</string>
+    <string name="tut1_from">Set the first day of the sequence.</string>
+    <string name="tut1_to">Set the last day of the sequence.</string>
+    <string name="tut1_addShift">Add a new shift to the sequence.</string>
+    <string name="tut_btn_done"><b>GOT IT</b></string>
+    <string name="tut2_op">Drag &amp; drop to move a shift.\nSwipe a shift to the right to delete it.</string>
 </resources>
