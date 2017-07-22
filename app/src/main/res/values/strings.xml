@@ -32,4 +32,7 @@
     <string name="tut1_addShift">Add a new shift to the sequence.</string>
     <string name="tut_btn_done"><b>GOT IT</b></string>
     <string name="tut2_op">Drag &amp; drop to move a shift.\nSwipe a shift to the right to delete it.</string>
+    <string name="info">Information</string>
+    <string name="ic_website" translatable="false">https://icons8.com/icon/10053/Calendar-Filled</string>
+    <string name="ic_website_name">Icons8</string>
 </resources>

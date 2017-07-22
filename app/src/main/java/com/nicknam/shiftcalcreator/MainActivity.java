@@ -1,5 +1,6 @@
 package com.nicknam.shiftcalcreator;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,9 +36,9 @@ import java.util.Date;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
-import uk.co.deanwild.materialshowcaseview.target.ViewTarget;
 
 public class MainActivity extends AppCompatActivity {
+    public static  final int REQUEST_CODE_ABOUT = 1;
     private DatePickerDialogFragment dpdf;
     private ArrayList<Shift> shifts;
     private final SingleToast toast = new SingleToast();
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayout contDateFrom = (LinearLayout) findViewById(R.id.activityMain_cont_dateFrom);
         final LinearLayout contDateTo = (LinearLayout) findViewById(R.id.activityMain_cont_dateTo);
         final ImageButton btnRestart = (ImageButton) findViewById(R.id.toolbarSchedule_btn_restart);
+        final ImageButton btnInfo = (ImageButton) findViewById(R.id.toolbarSchedule_btn_info);
         final RecyclerView rvShifts = (RecyclerView) findViewById(R.id.activityMain_rv_shifts);
         final Button btnAddShift = (Button) findViewById(R.id.activityMain_btn_addShift);
         final Button btnAddDayOff = (Button) findViewById(R.id.activityMain_btn_addDayOff);
@@ -192,14 +194,7 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
                         if (!preferences.getBoolean("tut2", false)) {
                             preferences.edit().putBoolean("tut2", true).apply();
-                        new MaterialShowcaseView.Builder(MainActivity.this)
-                                .withRectangleShape()
-                                .setMaskColour(getResources().getColor(R.color.colorTutorialMask))
-                                .setDismissTextColor(Color.BLACK)
-                                .setTarget(findViewById(R.id.activityMain_anker_rv_shifts))
-                                .setContentText(R.string.tut2_op)
-                                .setDismissText(R.string.tut_btn_done)
-                                .show();
+                            getTut2().show(MainActivity.this);
                         }
                     }
                 });
@@ -364,19 +359,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Show about page
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(MainActivity.this, AboutActivity.class), REQUEST_CODE_ABOUT);
+            }
+        });
+
 //        Show tutorial 1
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         if (!preferences.getBoolean("tut1", false)) {
             preferences.edit().putBoolean("tut1", true).apply();
-            ShowcaseConfig config = new ShowcaseConfig();
-            config.setMaskColor(getResources().getColor(R.color.colorTutorialMask));
-            config.setDismissTextColor(Color.BLACK);
-            MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
-            sequence.setConfig(config);
-            sequence.addSequenceItem(contDateFrom, getString(R.string.tut1_from), getString(R.string.tut_btn_done));
-            sequence.addSequenceItem(contDateTo, getString(R.string.tut1_to), getString(R.string.tut_btn_done));
-            sequence.addSequenceItem(btnAddShift, getString(R.string.tut1_addShift), getString(R.string.tut_btn_done));
-            sequence.start();
+            getTut1().start();
         }
     }
 
@@ -412,5 +407,43 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.super.onBackPressed();
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_ABOUT && resultCode == Activity.RESULT_OK && data.getBooleanExtra("tut", false)) {
+            if (shifts.size() == 0) {
+                getTut1();
+                SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+                preferences.edit()
+                        .putBoolean("tut2", false)
+                        .apply();
+            } else
+                getTut1().addSequenceItem(getTut2()).start();
+        } else
+            super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private MaterialShowcaseSequence getTut1() {
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setMaskColor(getResources().getColor(R.color.colorTutorialMask));
+        config.setDismissTextColor(Color.BLACK);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
+        sequence.setConfig(config);
+        sequence.addSequenceItem(findViewById(R.id.activityMain_cont_dateFrom), getString(R.string.tut1_from), getString(R.string.tut_btn_done));
+        sequence.addSequenceItem(findViewById(R.id.activityMain_cont_dateTo), getString(R.string.tut1_to), getString(R.string.tut_btn_done));
+        sequence.addSequenceItem(findViewById(R.id.activityMain_btn_addShift), getString(R.string.tut1_addShift), getString(R.string.tut_btn_done));
+        return sequence;
+    }
+
+    private MaterialShowcaseView getTut2() {
+        return new MaterialShowcaseView.Builder(MainActivity.this)
+                .withRectangleShape()
+                .setMaskColour(getResources().getColor(R.color.colorTutorialMask))
+                .setDismissTextColor(Color.BLACK)
+                .setTarget(findViewById(R.id.activityMain_anker_rv_shifts))
+                .setContentText(R.string.tut2_op)
+                .setDismissText(R.string.tut_btn_done)
+                .build();
     }
 }
