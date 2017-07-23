@@ -21,7 +21,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Element tutorialElement = new Element()
-                .setTitle("Show tutorial")
+                .setTitle(getString(R.string.showTutorial))
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -30,16 +30,19 @@ public class AboutActivity extends AppCompatActivity {
                     }
                 });
         Element versionElement = new Element()
-                .setTitle("Version " + BuildConfig.VERSION_NAME);
+                .setTitle(getString(R.string.version) + " " + BuildConfig.VERSION_NAME);
         Element iconElement = new Element()
-                .setTitle("Icon design by " + getString(R.string.ic_website_name))
+                .setTitle(getString(R.string.icBy) + " " + getString(R.string.ic_website_name))
                 .setIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.ic_website))));
         AboutPage aboutPage = new AboutPage(this)
-                .setDescription("ShiftCal Creator about page.")
+                .setDescription(getString(R.string.description))
                 .isRTL(false)
                 .addItem(tutorialElement)
+                .addGroup(getString(R.string.about))
                 .addItem(versionElement)
-                .addItem(iconElement);
+                .addItem(iconElement)
+                .addGitHub(getString(R.string.github_id), getString(R.string.checkoutGithub))
+                .addPlayStore(BuildConfig.APPLICATION_ID, getString(R.string.leaveRating));
 
         setContentView(aboutPage.create());
     }

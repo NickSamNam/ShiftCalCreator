@@ -35,4 +35,12 @@
     <string name="info">Information</string>
     <string name="ic_website" translatable="false">https://icons8.com/icon/10053/Calendar-Filled</string>
     <string name="ic_website_name">Icons8</string>
+    <string name="showTutorial">Show tutorial</string>
+    <string name="version">Version</string>
+    <string name="icBy">App icon by</string>
+    <string name="description">Enter one cycle of your shift schedule and ShiftCal Creator does the rest.</string>
+    <string name="about">About</string>
+    <string name="github_id">NickSamNam</string>
+    <string name="checkoutGithub">Check me out on GitHub</string>
+    <string name="leaveRating">Leave a rating</string>
 </resources>
