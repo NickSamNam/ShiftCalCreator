@@ -27,20 +27,20 @@
     <string name="admob_id" translatable="false">ca-app-pub-2114038879047980~3399368758</string>
     <string name="interstitial_ad_id" translatable="false">ca-app-pub-2114038879047980/6352835151</string>
     <string name="noCalSupport">No app found supporting iCal import.</string>
-    <string name="tut1_from">Set the first day of the sequence.</string>
-    <string name="tut1_to">Set the last day of the sequence.</string>
-    <string name="tut1_addShift">Add a new shift to the sequence.</string>
+    <string name="tut1_from">Set the first day of the schedule.</string>
+    <string name="tut1_to">Set the last day of the schedule.</string>
+    <string name="tut1_addShift">Add a new shift to the cycle.</string>
     <string name="tut_btn_done"><b>GOT IT</b></string>
     <string name="tut2_op">Drag &amp; drop to move a shift.\nSwipe a shift to the right to delete it.</string>
     <string name="info">Information</string>
     <string name="ic_website" translatable="false">https://icons8.com/icon/10053/Calendar-Filled</string>
-    <string name="ic_website_name">Icons8</string>
+    <string name="ic_website_name" translatable="false">Icons8</string>
     <string name="showTutorial">Show tutorial</string>
     <string name="version">Version</string>
     <string name="icBy">App icon by</string>
     <string name="description">Enter one cycle of your shift schedule and ShiftCal Creator does the rest.</string>
     <string name="about">About</string>
-    <string name="github_id">NickSamNam</string>
+    <string name="github_id" translatable="false">NickSamNam</string>
     <string name="checkoutGithub">Check me out on GitHub</string>
     <string name="leaveRating">Leave a rating</string>
 </resources>

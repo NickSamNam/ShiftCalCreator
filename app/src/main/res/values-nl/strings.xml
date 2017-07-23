@@ -24,4 +24,16 @@
     <string name="shifts">Ploegen</string>
     <string name="to">Tot</string>
     <string name="info">Informatie</string>
+    <string name="about">Over</string>
+    <string name="description">Voer één cyclus van uw ploegenrooster in en ShiftCal Creator doet de rest.</string>
+    <string name="icBy">App icoon door</string>
+    <string name="leaveRating">Laat een beoordeling achter</string>
+    <string name="showTutorial">Toon instructies</string>
+    <string name="tut1_addShift">Voeg een nieuwe ploeg toe aan de cyclus.</string>
+    <string name="tut1_from">Stel de eerste dag van het rooster in.</string>
+    <string name="tut1_to">Stel de laatste dag van het rooster in.</string>
+    <string name="tut2_op">Sleep om een ploeg te verplaatsen. Veeg een ploeg naar rechts om het te verwijderen.</string>
+    <string name="tut_btn_done"><b>BEGREPEN</b></string>
+    <string name="version">Versie</string>
+    <string name="checkoutGithub">Bezoek me op GitHub</string>
 </resources>
