@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ABOUT && resultCode == Activity.RESULT_OK && data.getBooleanExtra("tut", false)) {
             if (shifts.size() == 0) {
-                getTut1();
+                getTut1().start();
                 SharedPreferences preferences = getPreferences(MODE_PRIVATE);
                 preferences.edit()
                         .putBoolean("tut2", false)
