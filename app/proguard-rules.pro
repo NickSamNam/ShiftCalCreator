@@ -23,3 +23,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn groovy.**
+-dontwarn org.codehaus.groovy.**
+-dontwarn org.apache.commons.logging.**
+-dontwarn sun.misc.Perf
+
+-dontnote com.google.vending.**
+-dontnote com.android.vending.licensing.**
+
+-dontwarn net.fortuna.ical4j.model.**
+
+-dontwarn org.slf4j.**
