@@ -43,7 +43,7 @@ public class ICal {
         cal = new Calendar();
         this. context = context;
 
-        cal.getProperties().add(new ProdId("-//" + context.getString(R.string.com_name) + "//" + context.getString(R.string.app_name) + " " + context.getString(R.string.app_version) + "//" + Locale.getDefault().getLanguage().toUpperCase()));
+        cal.getProperties().add(new ProdId("-//" + context.getString(R.string.com_name) + "//" + context.getString(R.string.app_name) + " v" + BuildConfig.VERSION_NAME + "//" + Locale.getDefault().getLanguage().toUpperCase()));
         cal.getProperties().add(Version.VERSION_2_0);
         cal.getProperties().add(CalScale.GREGORIAN);
         cal.getProperties().add(new XProperty("X-WR-CALNAME", name));
