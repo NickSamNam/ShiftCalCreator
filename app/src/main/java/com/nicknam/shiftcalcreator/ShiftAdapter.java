@@ -1,11 +1,13 @@
 package com.nicknam.shiftcalcreator;
 
 import android.annotation.SuppressLint;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -29,14 +31,14 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftHolder>
     }
 
     @Override
-    public ShiftHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ShiftHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         timeFormat = android.text.format.DateFormat.getTimeFormat(parent.getContext());
         return new ShiftHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shift, parent, false));
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(final ShiftHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ShiftHolder holder, final int position) {
         Shift s = shifts.get(position);
         holder.name.setText(s.getName());
         holder.repetition.setText(s.getRepetition() + "x");

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">ShiftCal Creator</string>
+    <string name="app_name" translatable="false">Shift Calendar Creator</string>
     <string name="com_name" translatable="false">Sam Nicknam</string>
     <string name="from">From</string>
     <string name="to">To</string>

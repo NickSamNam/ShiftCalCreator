@@ -7,12 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -22,6 +16,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -52,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
 //        Set up ads
         MobileAds.initialize(this, getString(R.string.admob_id));
         interstitialAd = new InterstitialAd(this);
-        // TODO: 18-7-2017 replace line below with: interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
-        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
 
         final TextView tvName = (TextView) findViewById(R.id.toolbarSchedule_et_name);
         final TextView tvDateFrom = (TextView) findViewById(R.id.mainActivity_tv_dateFrom);
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                         shiftAdapter.notifyItemChanged(position);
                     }
                 });
-                shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
+                shiftDialogFragment.show(getSupportFragmentManager(), "shiftCreator");
             }
         });
         rvShifts.setAdapter(shiftAdapter);
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-                shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
+                shiftDialogFragment.show(getSupportFragmentManager(), "shiftCreator");
             }
         });
 
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                         shiftAdapter.notifyDataSetChanged();
                     }
                 });
-                shiftDialogFragment.show(getFragmentManager(), "shiftCreator");
+                shiftDialogFragment.show(getSupportFragmentManager(), "shiftCreator");
             }
         });
 

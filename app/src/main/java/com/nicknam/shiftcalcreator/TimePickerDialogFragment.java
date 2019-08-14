@@ -1,11 +1,13 @@
 package com.nicknam.shiftcalcreator;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
@@ -30,6 +32,7 @@ public class TimePickerDialogFragment extends DialogFragment implements TimePick
         timeTo.set(0, 0, 0, 17, 0);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new TimePickerDialog(getActivity(), this, tpdHour, tpdMinute, DateFormat.is24HourFormat(getActivity()));
